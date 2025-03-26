@@ -1,0 +1,289 @@
+[gd_scene load_steps=15 format=3 uid="uid://da0mwar2tbgog"]
+
+[ext_resource type="FontFile" uid="uid://vtwkx5y5oxq2" path="res://Assets/Fonts/Xolonium/Xolonium-Regular.otf" id="1_8fi38"]
+[ext_resource type="Script" uid="uid://umt7wy53vn06" path="res://Content/UI/PlayerHud.cs" id="2_b1yjf"]
+[ext_resource type="StyleBox" uid="uid://beub8vgpiyoui" path="res://Assets/Styles/HealthBars/HullBarBG.stylebox" id="3_pvgvj"]
+[ext_resource type="StyleBox" uid="uid://w665dei4hy55" path="res://Assets/Styles/HealthBars/HullBarFill.stylebox" id="4_rkiur"]
+[ext_resource type="StyleBox" uid="uid://xy5aongky4gl" path="res://Assets/Styles/HealthBars/DurabilityBarBG.stylebox" id="5_4mmei"]
+[ext_resource type="StyleBox" uid="uid://lxhlj6chhby3" path="res://Assets/Styles/HealthBars/DurabilityBarFill.stylebox" id="6_ylxfn"]
+[ext_resource type="StyleBox" uid="uid://cfyuj6t5ottft" path="res://Assets/Styles/HealthBars/NoColorBG.tres" id="7_cma2j"]
+[ext_resource type="StyleBox" uid="uid://deq5p28fpx4is" path="res://Assets/Styles/HealthBars/ShieldBarFill.tres" id="8_7ljqp"]
+
+[sub_resource type="Theme" id="Theme_owt7e"]
+default_font = ExtResource("1_8fi38")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8toqs"]
+bg_color = Color(0, 0, 0, 0.705882)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cf78g"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64dbf"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug7w7"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tfeq"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PlayerHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_owt7e")
+script = ExtResource("2_b1yjf")
+
+[node name="OverallPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+offset_right = 600.0
+offset_bottom = -40.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8toqs")
+
+[node name="WeaponName" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.4
+anchor_bottom = 0.1
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Despacito
+"
+
+[node name="BarsPanel" type="Control" parent="OverallPanel"]
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.05
+anchor_bottom = 0.5
+offset_top = -15.0
+offset_right = 300.0
+offset_bottom = 15.0
+
+[node name="HullBar" type="ProgressBar" parent="OverallPanel/BarsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("3_pvgvj")
+theme_override_styles/fill = ExtResource("4_rkiur")
+value = 50.0
+show_percentage = false
+
+[node name="DurabilityBar" type="ProgressBar" parent="OverallPanel/BarsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("5_4mmei")
+theme_override_styles/fill = ExtResource("6_ylxfn")
+value = 70.0
+show_percentage = false
+
+[node name="ShieldBar" type="ProgressBar" parent="OverallPanel/BarsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("7_cma2j")
+theme_override_styles/fill = ExtResource("8_7ljqp")
+value = 25.0
+show_percentage = false
+
+[node name="HPDurValue" type="Label" parent="OverallPanel/BarsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000h | 200d"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShieldValue" type="Label" parent="OverallPanel/BarsPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BulletCount" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -40.0
+offset_right = -30.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_cf78g")
+text = "120"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BulletStoredCount" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_64dbf")
+text = "120"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClipSize" type="GridContainer" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -50.0
+offset_right = -120.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ReloadBar" type="ProgressBar" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 50.0
+offset_top = -40.0
+offset_right = 70.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ug7w7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4tfeq")
+max_value = 1.0
+value = 0.7
+fill_mode = 3
+show_percentage = false
+
+[node name="ReloadSign" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = -55.0
+offset_right = -124.0
+offset_bottom = -35.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1, 6)
+theme_override_colors/font_color = Color(0, 0.566667, 1, 1)
+text = "RELOAD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmptySign" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = -55.0
+offset_right = -124.0
+offset_bottom = -35.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1, 6)
+theme_override_colors/font_color = Color(1, 0, 0.0166664, 1)
+text = "EMPTY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugRecoil" type="Label" parent="OverallPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 1.0
+anchor_right = 0.3
+anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = 49.0
+grow_vertical = 0
+text = "recoil"
+vertical_alignment = 1

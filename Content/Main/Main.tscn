@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjtgk3kuir1vu"]
+
+[ext_resource type="Script" uid="uid://byyf54v5qi583" path="res://Content/Main/Main.cs" id="1_jhe0a"]
+[ext_resource type="PackedScene" uid="uid://bd6efyvp20j3t" path="res://Content/Levels/LevelVR1/LevelVR1.tscn" id="2_uurva"]
+[ext_resource type="Script" uid="uid://uefpg1h1revn" path="res://addons/ProCam2D/scripts/procam2d.gd" id="3_asb8i"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jhe0a")
+Debug = true
+
+[node name="Level Handler" type="Node" parent="."]
+
+[node name="LevelVR1" parent="Level Handler" instance=ExtResource("2_uurva")]
+
+[node name="FloatText" type="Node2D" parent="."]
+
+[node name="MainCamera" type="Node2D" parent="."]
+z_index = 4096
+script = ExtResource("3_asb8i")
+follow_mode = 1
+drag_type = 1
+smooth_drag = true
+smooth_drag_speed = Vector2(5, 5)
+max_distance = Vector2(100000, 100000)
+prediction_time = Vector2(9, 9)
+offset = Vector2(0, 0)
+smooth_offset = true
+smooth_offset_speed = 2.0
+allow_rotation = true
+smooth_rotation = true
+smooth_rotation_speed = 5.0
+zoom = 0.8
+smooth_zoom = false
+auto_zoom = true
+min_zoom = 0.3
+max_zoom = 1.2
+zoom_margin = 5.0
+smooth_limit = true
+left_limit = -10000000
+right_limit = 10000000
+top_limit = -10000000
+bottom_limit = 10000000
+use_h_margins = false
+use_v_margins = false
+working_radius = 2000.0
+global_debug_draw = false
+addons = []

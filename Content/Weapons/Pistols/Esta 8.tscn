@@ -1,0 +1,120 @@
+[gd_scene load_steps=14 format=3 uid="uid://drtggylkugw8e"]
+
+[ext_resource type="PackedScene" uid="uid://blthu7uttjv4q" path="res://Content/Weapons/Weapon.tscn" id="1_q2its"]
+[ext_resource type="PackedScene" uid="uid://tuccclqf8lpy" path="res://Content/Projectiles/PulseBullet.tscn" id="2_l37dc"]
+[ext_resource type="Script" uid="uid://ccwg2kkkkejyn" path="res://Content/Resources/WeaponStatsData.cs" id="3_4qcsd"]
+[ext_resource type="AudioStream" uid="uid://dibu7b5rgrefn" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shot_pistol_police_G.ogg" id="4_sth6j"]
+[ext_resource type="AudioStream" uid="uid://bsdctpnamoamb" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_Eject_Scratchy_A.ogg" id="5_cgvi2"]
+[ext_resource type="Texture2D" uid="uid://delpdg4lvmwh4" path="res://Assets/Weapons/Pistol.png" id="5_febrt"]
+[ext_resource type="AudioStream" uid="uid://dxp2iwn7pcgos" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_reload_pistol_police_A.ogg" id="6_id0pq"]
+[ext_resource type="AudioStream" uid="uid://d36lfrpybqgwe" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_reload_pistol_police_B.ogg" id="7_co1m7"]
+
+[sub_resource type="Resource" id="Resource_q3vjd"]
+script = ExtResource("3_4qcsd")
+WeaponType = 0
+HullDamage = 225.0
+DurabilityDamage = 35.0
+DamageVariatyLowest = 0.75
+DamageVariatyHighest = 1.15
+CritChance = 0.0
+CritDamage = 1.5
+ArmorPiering = 7
+RateOfFire = 0.07
+ClipSize = 12
+ClipGain = 2.0
+ClipsMax = 5
+ShootType = 0
+BurstAmount = 1
+BurstDelay = 0.2
+Multishot = 1
+AmmoConsumption = 1
+ReloadType = 0
+ReloadTime = 0.85
+EjectTime = 0.58
+ReloadAmount = 1
+Deviation = 0.139626
+DeviationMax = 0.558505
+Recoil = 0.0523599
+RecoilResetStrength = 0.270526
+MovementInaccuracy = 1.2
+HeatGain = 7.0
+CoolStrength = 22.0
+HeatResetTime = 1.0
+ChargeTime = 0.0
+ChargeForEveryShot = false
+ShootImmediatlyWhenCharged = false
+SlowingOnFire = 0.2
+SlowingTime = 0.3
+JamChance = 0.05
+HoldType = 0
+ProjectileToShoot = ExtResource("2_l37dc")
+ProjectileSpeed = 3400.0
+MaxDistance = 2000.0
+EffectiveDistance = 900.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ga3gt"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("4_sth6j")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kcy44"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("5_cgvi2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vtii8"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 2
+stream_0/stream = ExtResource("6_id0pq")
+stream_1/stream = ExtResource("7_co1m7")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4btb4"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"eject",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_febrt")
+}],
+"loop": true,
+"name": &"hold",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload",
+"speed": 5.0
+}]
+
+[node name="Esta 8" instance=ExtResource("1_q2its")]
+WeaponName = "TR_ESTA_8"
+WeaponDescription = "TR_ESTA_8_DESCRIPTION"
+Stats = SubResource("Resource_q3vjd")
+
+[node name="Shoot" parent="Sounds" index="0"]
+stream = SubResource("AudioStreamRandomizer_ga3gt")
+
+[node name="Eject" parent="Sounds" index="1"]
+stream = SubResource("AudioStreamRandomizer_kcy44")
+
+[node name="Reload" parent="Sounds" index="2"]
+stream = SubResource("AudioStreamRandomizer_vtii8")
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2(20, 1)
+sprite_frames = SubResource("SpriteFrames_4btb4")
+
+[node name="Muzzle" parent="." index="3"]
+position = Vector2(34, 0)
+
+[node name="Muzzle2" parent="." index="4"]
+position = Vector2(34, 0)

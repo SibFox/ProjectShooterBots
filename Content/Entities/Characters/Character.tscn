@@ -1,0 +1,105 @@
+[gd_scene load_steps=14 format=3 uid="uid://b81l8dmm5tgh6"]
+
+[ext_resource type="Script" uid="uid://bk1rygagcrfdm" path="res://Content/Entities/Characters/Character.cs" id="1_wmsn8"]
+[ext_resource type="Script" uid="uid://crmernbqrhgcu" path="res://Content/Resources/CharacterStatsData.cs" id="2_xc881"]
+[ext_resource type="Texture2D" uid="uid://da716c71di40n" path="res://Assets/Player/SomewhatHead.png" id="3_5sjrm"]
+[ext_resource type="Script" uid="uid://3ru4i4huqwri" path="res://Content/Entities/Characters/Inventory.cs" id="3_ioqin"]
+[ext_resource type="PackedScene" uid="uid://b4y3p1sa6ikb1" path="res://Components/HurtboxComponent.tscn" id="4_776jl"]
+[ext_resource type="PackedScene" uid="uid://c87lhflhin60n" path="res://Components/VelocityComponent.tscn" id="6_mihxm"]
+[ext_resource type="PackedScene" uid="uid://2sgej4a0o8f3" path="res://Components/HealthComponent.tscn" id="7_mumuf"]
+
+[sub_resource type="Resource" id="Resource_udxd1"]
+script = ExtResource("2_xc881")
+Toughness = 50
+HullRecovery = 0.0
+DurabilityRecovery = 0.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yhkwp"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eku2y"]
+radius = 15.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_agftp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5sjrm")
+}],
+"loop": true,
+"name": &"head",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y2fei"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"body",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7riuw"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"legs",
+"speed": 5.0
+}]
+
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("healthComponent", "hurtboxComponent", "velocityComponent") groups=["Character", "Entity"]]
+disable_mode = 1
+collision_mask = 16
+motion_mode = 1
+script = ExtResource("1_wmsn8")
+CharacterStats = SubResource("Resource_udxd1")
+healthComponent = NodePath("HealthComponent")
+hurtboxComponent = NodePath("HurtboxComponent")
+velocityComponent = NodePath("VelocityComponent")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="DurabilityRegenWait" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="ShieldRegenWait" type="Timer" parent="Timers" groups=["Character", "Entity"]]
+process_callback = 0
+one_shot = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_mumuf")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("6_mihxm")]
+maxSpeed = 450.0
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("healthComponent") instance=ExtResource("4_776jl")]
+collision_mask = 2
+healthComponent = NodePath("../HealthComponent")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_yhkwp")
+debug_color = Color(0.939095, 0.220943, 0.291559, 0.42)
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_eku2y")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Head" type="AnimatedSprite2D" parent="Sprites"]
+sprite_frames = SubResource("SpriteFrames_agftp")
+animation = &"head"
+
+[node name="Body" type="AnimatedSprite2D" parent="Sprites"]
+sprite_frames = SubResource("SpriteFrames_y2fei")
+animation = &"body"
+
+[node name="Legs" type="AnimatedSprite2D" parent="Sprites"]
+sprite_frames = SubResource("SpriteFrames_7riuw")
+animation = &"legs"
+
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource("3_ioqin")
+
+[connection signal="CharacterReload" from="." to="." method="ManageReload"]
+[connection signal="CharacterShoot" from="." to="." method="ManageShot"]
+[connection signal="child_entered_tree" from="Inventory" to="Inventory" method="on_ChildEnteredTree"]

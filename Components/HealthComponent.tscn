@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://2sgej4a0o8f3"]
+
+[ext_resource type="Script" uid="uid://bklvath6e4rj5" path="res://Components/HealthComponent.cs" id="1_tkuq7"]
+
+[node name="HealthComponent" type="Node2D"]
+script = ExtResource("1_tkuq7")
+MaxHullPoints = 300.0

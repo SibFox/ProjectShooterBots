@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=3 uid="uid://blthu7uttjv4q"]
+
+[ext_resource type="Script" uid="uid://bkysyhtkhimqo" path="res://Content/Weapons/Weapon.cs" id="1_yb6ie"]
+[ext_resource type="AudioStream" uid="uid://dibu7b5rgrefn" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shot_pistol_police_G.ogg" id="2_eqelv"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fyo8i"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_eqelv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cjtqw"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jym6x"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8et1n"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ad87d"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vb3hy"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"eject",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hold",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload",
+"speed": 5.0
+}]
+
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_yb6ie")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="RateOfFire" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="ReloadTime" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="EjectTime" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="RecoilReset" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="HeatReset" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_fyo8i")
+
+[node name="Eject" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_cjtqw")
+
+[node name="Reload" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_jym6x")
+
+[node name="Jam" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_8et1n")
+
+[node name="Equip" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_ad87d")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vb3hy")
+animation = &"hold"
+
+[node name="Muzzle" type="Marker2D" parent="."]
+
+[node name="Muzzle2" type="Marker2D" parent="."]
+
+[node name="Attachments" type="Node" parent="."]
+
+[connection signal="timeout" from="Timers/RateOfFire" to="." method="_on_RateOfFire_Timeout"]
+[connection signal="timeout" from="Timers/ReloadTime" to="." method="_on_ReloadTime_Timeout"]
+[connection signal="timeout" from="Timers/EjectTime" to="." method="_on_EjectTime_Timeout"]
+[connection signal="timeout" from="Timers/RecoilReset" to="." method="_on_RecoilReset_Timeout"]
+[connection signal="timeout" from="Timers/HeatReset" to="." method="_on_HeatReset_Timeout"]

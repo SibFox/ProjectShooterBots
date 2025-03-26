@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckyw4wl4p461m"]
+
+[ext_resource type="Script" path="res://Content/Levels/Level.cs" id="1_2rkf2"]
+[ext_resource type="TileSet" uid="uid://h8mw3hmuti5v" path="res://Content/Levels/Tiles/WallTiles.tres" id="2_24a28"]
+[ext_resource type="Script" path="res://addons/ProCam2D/scripts/procam2d.gd" id="2_c3xkw"]
+
+[node name="BaseLevel" type="Node"]
+script = ExtResource("1_2rkf2")
+
+[node name="Layers" type="Node" parent="."]
+
+[node name="WallsLayer" type="TileMapLayer" parent="Layers"]
+scale = Vector2(3, 3)
+tile_set = ExtResource("2_24a28")
+
+[node name="MapObjects" type="Node2D" parent="."]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="Entities"]
+
+[node name="Players" type="Node2D" parent="Entities"]
+
+[node name="NPCs" type="Node2D" parent="Entities"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="SpawnPoints"]
+
+[node name="Cameras" type="Node" parent="."]
+
+[node name="LevelCamera" type="Node2D" parent="Cameras"]
+z_index = 4096
+script = ExtResource("2_c3xkw")
+follow_mode = 1
+drag_type = 1
+smooth_drag = true
+smooth_drag_speed = Vector2(5, 5)
+max_distance = Vector2(100000, 100000)
+prediction_time = Vector2(9, 9)
+offset = Vector2(0, 0)
+smooth_offset = true
+smooth_offset_speed = 2.0
+allow_rotation = true
+smooth_rotation = true
+smooth_rotation_speed = 5.0
+zoom = 0.5
+smooth_zoom = false
+auto_zoom = true
+min_zoom = 0.3
+max_zoom = 1.0
+zoom_margin = 5.0
+smooth_limit = true
+left_limit = -10000000
+right_limit = 10000000
+top_limit = -10000000
+bottom_limit = 10000000
+use_h_margins = false
+use_v_margins = false
+working_radius = 2000.0
+global_debug_draw = false
+addons = []

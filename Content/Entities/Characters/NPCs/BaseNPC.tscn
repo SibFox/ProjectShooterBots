@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bntd83iurjop1"]
+
+[ext_resource type="PackedScene" uid="uid://b81l8dmm5tgh6" path="res://Content/Entities/Characters/Character.tscn" id="1_gki31"]
+[ext_resource type="Script" uid="uid://cxjhyx08rag0f" path="res://Content/Entities/Characters/NPCs/NPC.cs" id="2_2c6dp"]
+
+[node name="BaseNPC" groups=["NPC"] instance=ExtResource("1_gki31")]
+script = ExtResource("2_2c6dp")
+CharacterStats = null
+
+[node name="HealthComponent" parent="." index="1"]
+MaxHullPoints = 3000.0
+MaxDurability = 500.0
+MaxShield = 300.0

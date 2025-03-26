@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw4k8myees11l"]
+
+[ext_resource type="Script" uid="uid://dr1hg8bpcwy72" path="res://Content/Projectiles/Projectile.cs" id="1_8vhgj"]
+[ext_resource type="PackedScene" uid="uid://uy3dmsk07wuv" path="res://Components/HitboxComponent.tscn" id="2_t6hxj"]
+[ext_resource type="PackedScene" uid="uid://c87lhflhin60n" path="res://Components/VelocityComponent.tscn" id="3_7506g"]
+
+[node name="BaseProjectile" type="CharacterBody2D" node_paths=PackedStringArray("hitboxComponent", "velocityComponent") groups=["Entity", "Projectile"]]
+collision_layer = 2
+collision_mask = 48
+script = ExtResource("1_8vhgj")
+hitboxComponent = NodePath("HitboxComponent")
+velocityComponent = NodePath("VelocityComponent")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+
+[node name="Collisionbox" type="CollisionShape2D" parent="."]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_t6hxj")]
+collision_layer = 2
+collision_mask = 33
+input_pickable = false
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxComponent"]
+debug_color = Color(0.95337, 0.178146, 0.321303, 0.42)
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Ricochet" type="AudioStreamPlayer2D" parent="Sounds"]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("3_7506g")]
+
+[connection signal="DistanceWentOff" from="." to="." method="on_DistanceWentOff"]
+[connection signal="EffectiveDistanceWentOff" from="." to="." method="on_EffectiveDistanceWentOff"]

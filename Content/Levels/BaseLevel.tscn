@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckyw4wl4p461m"]
+
+[ext_resource type="Script" uid="uid://b70y7shujnvid" path="res://Content/Levels/Level.cs" id="1_2rkf2"]
+[ext_resource type="TileSet" uid="uid://h8mw3hmuti5v" path="res://Content/Levels/Tiles/WallTiles.tres" id="2_24a28"]
+
+[node name="BaseLevel" type="Node"]
+script = ExtResource("1_2rkf2")
+
+[node name="Layers" type="Node" parent="."]
+
+[node name="WallsLayer" type="TileMapLayer" parent="Layers"]
+scale = Vector2(3, 3)
+tile_set = ExtResource("2_24a28")
+
+[node name="MapObjects" type="Node2D" parent="."]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="Entities"]
+
+[node name="Players" type="Node2D" parent="Entities"]
+
+[node name="NPCs" type="Node2D" parent="Entities"]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="SpawnPoints"]
+
+[node name="Cameras" type="Node" parent="."]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bw0de3rtncpxp"]
+
+[ext_resource type="PackedScene" uid="uid://b81l8dmm5tgh6" path="res://Content/Entities/Characters/Character.tscn" id="1_2uvrd"]
+[ext_resource type="Script" uid="uid://dbub1iuvdjsyp" path="res://Content/Entities/Characters/Players/Player.cs" id="2_3v2bg"]
+[ext_resource type="Script" uid="uid://dyivihaohewji" path="res://addons/ProCam2D/scripts/pcam_target.gd" id="3_mykgo"]
+[ext_resource type="Script" uid="uid://cpq6oehcwuu2d" path="res://Content/Entities/Characters/Players/Mouse.cs" id="4_rhsjm"]
+[ext_resource type="Texture2D" uid="uid://tpok1rr6f5u" path="res://Assets/Cursor.png" id="5_pputt"]
+[ext_resource type="PackedScene" uid="uid://da0mwar2tbgog" path="res://Content/UI/PlayerHUD.tscn" id="6_8nl01"]
+
+[node name="BasePlayer" groups=["Player"] instance=ExtResource("1_2uvrd")]
+script = ExtResource("2_3v2bg")
+CharacterStats = null
+
+[node name="HealthComponent" parent="." index="1"]
+MaxHullPoints = 2500.0
+
+[node name="PlayerTarget" type="Node2D" parent="." index="7"]
+script = ExtResource("3_mykgo")
+
+[node name="Mouse" type="Node" parent="." index="8"]
+script = ExtResource("4_rhsjm")
+
+[node name="MousePosition" type="Marker2D" parent="Mouse" index="0"]
+
+[node name="Cursor" type="Sprite2D" parent="Mouse/MousePosition" index="0"]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_pputt")
+
+[node name="MouseTarget" type="Node2D" parent="Mouse" index="1"]
+script = ExtResource("3_mykgo")
+influence = Vector2(0.2, 0.2)
+radius = 10.0
+
+[node name="Cursor" type="Sprite2D" parent="Mouse/MouseTarget" index="0"]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("5_pputt")
+
+[node name="PlayerUI" type="CanvasLayer" parent="." index="9"]
+
+[node name="PlayerHUD" parent="PlayerUI" index="0" node_paths=PackedStringArray("player") instance=ExtResource("6_8nl01")]
+player = NodePath("../..")

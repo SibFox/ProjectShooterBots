@@ -1,0 +1,107 @@
+[gd_scene load_steps=11 format=3 uid="uid://c61vne7vonq6f"]
+
+[ext_resource type="PackedScene" uid="uid://blthu7uttjv4q" path="res://Content/Weapons/Weapon.tscn" id="1_gb1es"]
+[ext_resource type="Texture2D" uid="uid://delpdg4lvmwh4" path="res://Assets/Weapons/Pistol.png" id="2_1sbyv"]
+[ext_resource type="PackedScene" uid="uid://tuccclqf8lpy" path="res://Content/Projectiles/PulseBullet.tscn" id="2_w2ofw"]
+[ext_resource type="Script" uid="uid://ccwg2kkkkejyn" path="res://Content/Resources/WeaponStatsData.cs" id="3_dqfba"]
+[ext_resource type="AudioStream" uid="uid://c7e1y7uf63p5r" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shot_shotgun_police_D.ogg" id="4_y6jrx"]
+[ext_resource type="AudioStream" uid="uid://bma6r46akrqt" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shotgun_reload_A.ogg" id="5_lroyx"]
+
+[sub_resource type="Resource" id="Resource_606ju"]
+script = ExtResource("3_dqfba")
+WeaponType = 5
+HullDamage = 300.0
+DurabilityDamage = 35.0
+DamageVariatyLowest = 0.85
+DamageVariatyHighest = 1.25
+CritChance = 0.0
+CritDamage = 1.5
+ArmorPiering = 10
+RateOfFire = 0.4
+ClipSize = 4
+ClipGain = 3.0
+ClipsMax = 7
+ShootType = 0
+BurstAmount = 1
+BurstDelay = 0.2
+Multishot = 4
+AmmoConsumption = 1
+ReloadType = 1
+ReloadTime = 0.6
+EjectTime = 0.3
+ReloadAmount = 1
+Deviation = 0.10472
+DeviationMax = 0.698132
+Recoil = 0.139626
+RecoilResetStrength = 0.20944
+MovementInaccuracy = 1.25
+HeatGain = 12.0
+CoolStrength = 22.0
+HeatResetTime = 2.5
+ChargeTime = 0.0
+ChargeForEveryShot = false
+ShootImmediatlyWhenCharged = false
+SlowingOnFire = 0.4
+SlowingTime = 0.5
+JamChance = 0.05
+HoldType = 0
+ProjectileToShoot = ExtResource("2_w2ofw")
+ProjectileSpeed = 2300.0
+MaxDistance = 700.0
+EffectiveDistance = 500.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_afkh6"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("4_y6jrx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8uwd7"]
+playback_mode = 1
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("5_lroyx")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vee4v"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"eject",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1sbyv")
+}],
+"loop": true,
+"name": &"hold",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload",
+"speed": 5.0
+}]
+
+[node name="Strais" instance=ExtResource("1_gb1es")]
+WeaponName = "TR_STRAIS"
+WeaponDescription = "TR_STRAIS_DESCRIPTION"
+Stats = SubResource("Resource_606ju")
+
+[node name="Shoot" parent="Sounds" index="0"]
+stream = SubResource("AudioStreamRandomizer_afkh6")
+
+[node name="Reload" parent="Sounds" index="2"]
+stream = SubResource("AudioStreamRandomizer_8uwd7")
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2(20, 1)
+sprite_frames = SubResource("SpriteFrames_vee4v")
+
+[node name="Muzzle" parent="." index="3"]
+position = Vector2(33, 0)
+
+[node name="Muzzle2" parent="." index="4"]
+position = Vector2(33, 0)
