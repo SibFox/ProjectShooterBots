@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Projectile : CharacterBody2D
@@ -18,69 +19,74 @@ public partial class Projectile : CharacterBody2D
 	public double baseArmorPierce { get; private set; }
 	public double baseMaxDistance { get; private set; }
 	public double baseEffectiveDistance { get; private set; }
+	public bool Crit { get; private set; }
 	
 	private double timeFactor = 1f;
 	
 	private bool active = false;
 
 	[Export(PropertyHint.NodeType, "HitboxComponent")]
-	private HitboxComponent hitboxComponent;
+	public HitboxComponent hitboxComponent { get; private set; }
 	[Export(PropertyHint.NodeType, "VelocityComponent")]
-	private VelocityComponent velocityComponent;
+	public VelocityComponent velocityComponent { get; private set; }
 	[Export(PropertyHint.ResourceType, "ProjectileStatsData")]
-	public ProjectileStatsData Stats;
+	public ProjectileStatsData Stats { get; private set; }
 
-	public int ricochetAmount;
-	public double leftDistance;
-	public double leftEffectiveDistance;
+	public int ricochetAmount { get; private set; }
+	public double remainedDistance { get; private set; }
+	public double remainedEffectiveDistance { get; private set; }
 	
 	public override void _Ready()
 	{	
-		leftDistance = baseMaxDistance;
-		leftEffectiveDistance = baseEffectiveDistance;
+		if (Stats == null) Free();
+		remainedDistance = baseMaxDistance;
+		remainedEffectiveDistance = baseEffectiveDistance;
 		ricochetAmount = Stats.RicochetAmount;
 
-		velocityComponent.KinematicCollision += _on_KinematicCollide;
+		// velocityComponent.KinematicCollision += OnKinematicCollision;
+
+		ApplyDefaults();
 
 		active = true;
 	}
 
 	/// <summary>
-	/// A method for a proper applience of scalings and buffs on Hitbox Component.
+	/// A method for a proper applience of scalings and buffs for Hitbox Component.
 	/// </summary>
-	public virtual void ApplyDefaults()
+	protected virtual void ApplyDefaults()
 	{
-		double finalHullDamage = baseHullDamage;
-		double finalDurabilityDamage = baseDurabilityDamage;
-		double finalShieldDamage = baseHullDamage;
-		if (Main.Rand.Percent(baseCritChance))
-		{
-			finalHullDamage *= baseCritDamage;
-			finalShieldDamage *= baseCritDamage;
-		}
+		Crit = Main.Rand.Percent(baseCritChance + 10);
+		double rangeMultiplier = Main.Rand.RanddRange(sourceWeapon.Stats.DamageVariatyLowest, sourceWeapon.Stats.DamageVariatyHighest);
+		hitboxComponent.HullDamage = baseHullDamage * Stats.DamageHullMultiplier * rangeMultiplier;
+		hitboxComponent.DurabilityDamage = baseDurabilityDamage * Stats.DamageDurabilityMultiplier * rangeMultiplier;
+		hitboxComponent.ShieldDamage = baseHullDamage * Stats.DamageShieldMultiplier * rangeMultiplier;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		double calculatedDelta = delta * Global.GetCalculatedTimeFactor(timeFactor);
+		PreUpdate(calculatedDelta);
 		Update(calculatedDelta);
 		PostUpdate(calculatedDelta);
 	}
 
-	void Update(double delta)
+
+	void PreUpdate(double delta)
 	{
 		velocityComponent.MoveWithCollision(this, delta);
 
-		leftDistance -= Velocity.Length() * delta;
-		leftEffectiveDistance -= Velocity.Length() * delta;
+		remainedDistance -= Velocity.Length() * delta;
+		remainedEffectiveDistance -= Velocity.Length() * delta;
 
 		Rotation = Velocity.Angle();
 	}
 
+	protected virtual void Update(double delta) {}
+
 	void PostUpdate(double delta)
 	{
 		if (IsQueuedForDeletion())
-			CallDeferred(nameof(OnKill), leftDistance);
+			CallDeferred(nameof(OnKill), remainedDistance);
 	}
 
 	void _QueueKill(double leftDistance)
@@ -93,17 +99,7 @@ public partial class Projectile : CharacterBody2D
 
 	bool OnPreKill(double leftDistance)
 	{
-		if (leftDistance < 0) return true;
-
-		// if (velocityComponent.IsColliding)
-		// {
-		// 	if (Main.Rand.Percent(Stats.RicochetChance) & ricochetAmount > 0)
-		// 	{
-		// 		--ricochetAmount;
-		// 		velocityComponent.Bounce(this);
-		// 		return false;
-		// 	}
-		// }
+		// if (leftDistance < 0) return true;
 
 		return true;
 	}
@@ -112,17 +108,22 @@ public partial class Projectile : CharacterBody2D
 
 
 
-	void on_DistanceWentOff()
+	protected virtual void OnDistanceWentOff()
 	{
-		_QueueKill(leftDistance);
+		_QueueKill(remainedDistance);
 	}
 
-	void on_EffectiveDistanceWentOff()
-	{
+	protected virtual void OnEffectiveDistanceWentOff() {}
 
+	void OnHitboxAreaEntered(Area2D area)
+	{
+		OnHit(area);
+		_QueueKill(remainedDistance);
 	}
 
-	void _on_KinematicCollide(Node2D body)
+	protected virtual void OnHit(Area2D area) {}
+
+	void OnKinematicCollision(Node2D body)
 	{
 		// GD.Print("[Projectile/KinematicCollide] Collided with ", body, " | ", ricochetAmount);
 		if (velocityComponent.IsColliding)
@@ -131,14 +132,16 @@ public partial class Projectile : CharacterBody2D
 			{
 				--ricochetAmount;
 				velocityComponent.Bounce(this);
+				OnRichochet();
 				return;
 			}
 			if (body is not Character & body is not Projectile)
-				_QueueKill(leftDistance);
+				_QueueKill(remainedDistance);
 		}
 		
 	}
 
+	protected virtual void OnRichochet() {}
 
 
 	public static void NewProjectileFromWeapon(Weapon weapon, PackedScene projectileScene, Character owner, Vector2 spawnPosition, Vector2 spawnVelocity)

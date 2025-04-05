@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Godot;
 
 [Tool]
@@ -149,8 +151,8 @@ public partial class HealthComponent : Node2D
 
 	public bool IsDamaged => CurrentHullPoints < MaxHullPoints;
 
-	public bool isExposed;
-	private bool hasDied;
+	public bool isExposed { get; private set; }
+	public bool hasDied { get; private set; }
 	private double maxHullPoints = 2000;
 	private double maxDurability = 300;
 	private double maxShield = 0;
@@ -162,6 +164,7 @@ public partial class HealthComponent : Node2D
 	{
 		InitializeHealth();
 	}
+
 	// public override void _Notification(int what)
 	// {
 	//     if (what == NotificationSceneInstantiated)
@@ -170,23 +173,35 @@ public partial class HealthComponent : Node2D
 	//     }
 	// }
 
-	public void Damage(double hullDamage, double durDamage, bool forceHideDamage = false)
+	public void Damage(double hullDamage, double durabilityDamage, double shieldDamage = 0, bool forceHideDamage = false)
 	{
+		StringBuilder debug = new();
+		debug.Append($"{DateTime.Now:HH:mm:ss:fff} [HealthComponent] ");
 		if (HasShield & HasShieldRemaining)
 		{
-			CurrentShield -= hullDamage;
+			CurrentShield -= shieldDamage;
+			debug.Append($"Щит: {shieldDamage:N2}; ");
 		}
 		else
 		{
 			if (!isExposed)
 			{
-				CurrentDurability -= durDamage;
+				CurrentDurability -= durabilityDamage;
 				CurrentHullPoints -= hullDamage * 0.3;
+				debug.Append($"Прочность: {durabilityDamage:N2}; Корпус: {hullDamage * 0.3:N2}");
 			}
 			else
 			{
-				CurrentHullPoints -= hullDamage + durDamage * 0.5;
+				CurrentHullPoints -= hullDamage;
+				debug.Append($"Корпус: {hullDamage:N2}");
 			}
+		}
+
+		GD.Print(debug.ToString());
+
+		if (!forceHideDamage)
+		{
+			
 		}
 	}
 

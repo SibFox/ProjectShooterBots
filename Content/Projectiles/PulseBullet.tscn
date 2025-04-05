@@ -1,30 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://tuccclqf8lpy"]
+[gd_scene load_steps=8 format=3 uid="uid://tuccclqf8lpy"]
 
 [ext_resource type="PackedScene" uid="uid://cw4k8myees11l" path="res://Content/Projectiles/BaseProjectile.tscn" id="1_x3fsc"]
 [ext_resource type="Texture2D" uid="uid://dcseicn8cwvws" path="res://Assets/Projectiles/Bullet_Pistol.png" id="2_3w8h2"]
-[ext_resource type="Script" uid="uid://cuaska8f5xb6i" path="res://Content/Resources/DamageTypes/PhysicalDamage.cs" id="2_njhld"]
-[ext_resource type="Script" uid="uid://d3b2q2vxgi63k" path="res://Content/Resources/ProjectileStatsData.cs" id="3_sj7af"]
-
-[sub_resource type="Resource" id="Resource_8schi"]
-script = ExtResource("2_njhld")
-
-[sub_resource type="Resource" id="Resource_34rxt"]
-script = ExtResource("3_sj7af")
-DamageMultiplier = 1.0
-DamageHullMultiplier = 1.0
-DamageDurabilityMultiplier = 1.15
-DamageShieldMultiplier = 0.75
-CritChanceMultiplier = 1.0
-CritDamageMultiplier = 1.0
-WeakpointDamageMultiplier = 1.0
-ArmorPierncingMultiplier = 1.0
-ProjectileType = 0
-DamageType = SubResource("Resource_8schi")
-RicochetAmount = 1
-RicochetChance = 30.0
-PiercingStrength = 30
-IsExplosion = false
-CanHitOwner = true
+[ext_resource type="Script" uid="uid://v65lns4p0o4s" path="res://Content/Projectiles/PulseBullet.cs" id="2_4jf44"]
+[ext_resource type="Resource" uid="uid://bb2e02ewp5fw6" path="res://Content/Projectiles/Stats/PulseBulletStats.tres" id="3_j25jp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_obvjc"]
 animations = [{
@@ -45,7 +24,8 @@ size = Vector2(13, 5)
 
 [node name="PulseBullet" instance=ExtResource("1_x3fsc")]
 position = Vector2(3, 0)
-Stats = SubResource("Resource_34rxt")
+script = ExtResource("2_4jf44")
+Stats = ExtResource("3_j25jp")
 
 [node name="Sprite" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_obvjc")

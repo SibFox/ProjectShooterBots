@@ -29,5 +29,7 @@ debug_color = Color(0.95337, 0.178146, 0.321303, 0.42)
 
 [node name="VelocityComponent" parent="." instance=ExtResource("3_7506g")]
 
-[connection signal="DistanceWentOff" from="." to="." method="on_DistanceWentOff"]
-[connection signal="EffectiveDistanceWentOff" from="." to="." method="on_EffectiveDistanceWentOff"]
+[connection signal="DistanceWentOff" from="." to="." method="OnDistanceWentOff"]
+[connection signal="EffectiveDistanceWentOff" from="." to="." method="OnEffectiveDistanceWentOff"]
+[connection signal="area_entered" from="HitboxComponent" to="." method="OnHitboxAreaEntered"]
+[connection signal="KinematicCollision" from="VelocityComponent" to="." method="OnKinematicCollision"]

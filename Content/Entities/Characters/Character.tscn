@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b81l8dmm5tgh6"]
+[gd_scene load_steps=17 format=3 uid="uid://b81l8dmm5tgh6"]
 
 [ext_resource type="Script" uid="uid://bk1rygagcrfdm" path="res://Content/Entities/Characters/Character.cs" id="1_wmsn8"]
 [ext_resource type="Script" uid="uid://crmernbqrhgcu" path="res://Content/Resources/CharacterStatsData.cs" id="2_xc881"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b4y3p1sa6ikb1" path="res://Components/HurtboxComponent.tscn" id="4_776jl"]
 [ext_resource type="PackedScene" uid="uid://c87lhflhin60n" path="res://Components/VelocityComponent.tscn" id="6_mihxm"]
 [ext_resource type="PackedScene" uid="uid://2sgej4a0o8f3" path="res://Components/HealthComponent.tscn" id="7_mumuf"]
+[ext_resource type="FontFile" uid="uid://vtwkx5y5oxq2" path="res://Assets/Fonts/Xolonium/Xolonium-Regular.otf" id="8_85ajk"]
 
 [sub_resource type="Resource" id="Resource_udxd1"]
 script = ExtResource("2_xc881")
@@ -47,6 +48,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_cs8pd"]
+line_spacing = -2.0
+font = ExtResource("8_85ajk")
+font_size = 12
+font_color = Color(1, 0.36, 0.413333, 1)
+
+[sub_resource type="GDScript" id="GDScript_yq6os"]
+resource_name = "DebugHealthIternal"
+script/source = "extends Label
+
+func _physics_process(delta: float) -> void:
+	text = \"HULL>\" + str(snapped(owner.healthComponent.CurrentHullPoints, 2)) + \"\\nDUR>\" + str(snapped(owner.healthComponent.CurrentDurability, 2))
+	global_position = owner.global_position + Vector2(0, 20)
+"
+
 [node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("healthComponent", "hurtboxComponent", "velocityComponent") groups=["Character", "Entity"]]
 disable_mode = 1
 collision_mask = 16
@@ -63,7 +79,7 @@ velocityComponent = NodePath("VelocityComponent")
 process_callback = 0
 one_shot = true
 
-[node name="ShieldRegenWait" type="Timer" parent="Timers" groups=["Character", "Entity"]]
+[node name="ShieldRegenWait" type="Timer" parent="Timers"]
 process_callback = 0
 one_shot = true
 
@@ -99,6 +115,17 @@ animation = &"legs"
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_ioqin")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="DebugHealth" type="Label" parent="Node"]
+offset_top = 17.0
+offset_right = 105.0
+offset_bottom = 44.0
+text = "HP
+DUR"
+label_settings = SubResource("LabelSettings_cs8pd")
+script = SubResource("GDScript_yq6os")
 
 [connection signal="CharacterReload" from="." to="." method="ManageReload"]
 [connection signal="CharacterShoot" from="." to="." method="ManageShot"]
