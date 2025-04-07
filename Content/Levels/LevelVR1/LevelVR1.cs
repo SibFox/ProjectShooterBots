@@ -9,9 +9,12 @@ public partial class LevelVR1 : Level
 		player.Position = PlayerSpawnPosition;
 		Players.AddChild(player);
 		
-		NPC npc = GD.Load<PackedScene>("res://Content/Entities/Characters/NPCs/BaseNPC.tscn").Instantiate<NPC>();
-		npc.Position = Main.Rand.RandomPointInRectangle(new(GetNode<Marker2D>("SpawnPoints/Enemy1SpawnPoint").Position, new(100, 100)));
-		npc.Rotate((float)Main.Rand.RandomAngle());
-		NPCs.AddChild(npc);
+		for (int i = 1; i <= 3; i++)
+		{
+			NPC npc = GD.Load<PackedScene>("res://Content/Entities/Characters/NPCs/BaseNPC.tscn").Instantiate<NPC>();
+			npc.Position = Main.Rand.RandomPointInRectangle(new(GetNode<Marker2D>("SpawnPoints/Enemy1SpawnPoint").Position, new(300, 300)));
+			npc.Rotate((float)Main.Rand.RandomAngle());
+			NPCs.AddChild(npc);
+		}
 	}
 }
