@@ -8,6 +8,7 @@ script = ExtResource("1_henv4")
 metadata/_custom_type_script = "uid://cuaska8f5xb6i"
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_143m8")
 DamageMultiplier = 1.0
 DamageHullMultiplier = 1.0
@@ -19,8 +20,8 @@ WeakpointDamageMultiplier = 1.0
 ArmorPierncingMultiplier = 1.0
 ProjectileType = 0
 DamageType = SubResource("Resource_oycor")
-RicochetAmount = 3
-RicochetChance = 100.0
+RicochetAmount = 2
+RicochetChance = 60.0
 PiercingStrength = 30
 IsExplosion = false
 CanHitOwner = true

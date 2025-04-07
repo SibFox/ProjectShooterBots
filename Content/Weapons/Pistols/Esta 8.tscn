@@ -48,7 +48,7 @@ SlowingTime = 0.3
 JamChance = 0.05
 HoldType = 0
 ProjectileToShoot = ExtResource("2_l37dc")
-ProjectileSpeed = 3400.0
+ProjectileSpeed = 2800.0
 MaxDistance = 2000.0
 EffectiveDistance = 900.0
 

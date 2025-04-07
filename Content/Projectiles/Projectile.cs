@@ -128,11 +128,13 @@ public partial class Projectile : CharacterBody2D
 		// GD.Print("[Projectile/KinematicCollide] Collided with ", body, " | ", ricochetAmount);
 		if (velocityComponent.IsColliding)
 		{
+			// GD.Print($"{DateTime.Now:HH:mm:ss:fff} [Projectile] Столкновение ({Stats.RicochetChance})");
 			if (Main.Rand.Percent(Stats.RicochetChance) & ricochetAmount > 0)
 			{
 				--ricochetAmount;
 				velocityComponent.Bounce(this);
-				OnRichochet();
+				// GD.Print($"{DateTime.Now:HH:mm:ss:fff} [Projectile] Рикошет");
+				OnRichochet(body);
 				return;
 			}
 			if (body is not Character & body is not Projectile)
@@ -141,7 +143,7 @@ public partial class Projectile : CharacterBody2D
 		
 	}
 
-	protected virtual void OnRichochet() {}
+	protected virtual void OnRichochet(Node2D body) {}
 
 
 	public static void NewProjectileFromWeapon(Weapon weapon, PackedScene projectileScene, Character owner, Vector2 spawnPosition, Vector2 spawnVelocity)
