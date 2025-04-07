@@ -71,5 +71,10 @@ public partial class Character : CharacterBody2D
 	{
 		weapon?.ActionReload();
 	}
+
+	protected virtual void OnDeath()
+	{
+		QueueFree();
+	}
 	
 }

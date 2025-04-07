@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b81l8dmm5tgh6"]
+[gd_scene load_steps=25 format=3 uid="uid://b81l8dmm5tgh6"]
 
 [ext_resource type="Script" uid="uid://bk1rygagcrfdm" path="res://Content/Entities/Characters/Character.cs" id="1_wmsn8"]
 [ext_resource type="Script" uid="uid://crmernbqrhgcu" path="res://Content/Resources/CharacterStatsData.cs" id="2_xc881"]
@@ -7,7 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://b4y3p1sa6ikb1" path="res://Components/HurtboxComponent.tscn" id="4_776jl"]
 [ext_resource type="PackedScene" uid="uid://c87lhflhin60n" path="res://Components/VelocityComponent.tscn" id="6_mihxm"]
 [ext_resource type="PackedScene" uid="uid://2sgej4a0o8f3" path="res://Components/HealthComponent.tscn" id="7_mumuf"]
+[ext_resource type="Script" uid="uid://ddvy50iecr5yp" path="res://Content/Entities/Characters/SmallHpHud.cs" id="8_8aoxv"]
 [ext_resource type="FontFile" uid="uid://vtwkx5y5oxq2" path="res://Assets/Fonts/Xolonium/Xolonium-Regular.otf" id="8_85ajk"]
+[ext_resource type="StyleBox" uid="uid://beub8vgpiyoui" path="res://Assets/Styles/HealthBars/HullBarBG.stylebox" id="8_yq6os"]
+[ext_resource type="StyleBox" uid="uid://w665dei4hy55" path="res://Assets/Styles/HealthBars/HullBarFill.stylebox" id="9_0wno5"]
+[ext_resource type="StyleBox" uid="uid://xy5aongky4gl" path="res://Assets/Styles/HealthBars/DurabilityBarBG.stylebox" id="11_3ucks"]
+[ext_resource type="StyleBox" uid="uid://cfyuj6t5ottft" path="res://Assets/Styles/HealthBars/NoColorBG.tres" id="13_3bwlv"]
+[ext_resource type="StyleBox" uid="uid://deq5p28fpx4is" path="res://Assets/Styles/HealthBars/ShieldBarFill.tres" id="14_f73gg"]
 
 [sub_resource type="Resource" id="Resource_udxd1"]
 script = ExtResource("2_xc881")
@@ -48,6 +54,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_63n08"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uanwm"]
+resource_local_to_scene = true
+bg_color = Color(0.92, 0.122667, 0, 0)
+skew = Vector2(0.5, 0)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.65625, 0.1875, 0.686275)
+anti_aliasing = false
+
 [sub_resource type="LabelSettings" id="LabelSettings_cs8pd"]
 line_spacing = -2.0
 font = ExtResource("8_85ajk")
@@ -58,8 +76,8 @@ font_color = Color(1, 0.36, 0.413333, 1)
 resource_name = "DebugHealthIternal"
 script/source = "extends Label
 
-func _physics_process(delta: float) -> void:
-	text = \"HULL>\" + str(snapped(owner.healthComponent.CurrentHullPoints, 2)) + \"\\nDUR>\" + str(snapped(owner.healthComponent.CurrentDurability, 2))
+func _physics_process(_delta: float) -> void:
+	text = \"HULL>\" + str(snapped(owner.healthComponent.CurrentHullPoints, 0.01)) + \"\\nDUR>\" + str(snapped(owner.healthComponent.CurrentDurability, 0.01)) + \"\\nSHLD>\" + str(snapped(owner.healthComponent.CurrentShield, 0.01))
 	global_position = owner.global_position + Vector2(0, 20)
 "
 
@@ -118,15 +136,61 @@ script = ExtResource("3_ioqin")
 
 [node name="Node" type="Node" parent="."]
 
+[node name="SmallHPHud" type="Panel" parent="Node"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = -20.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_63n08")
+script = ExtResource("8_8aoxv")
+
+[node name="HullBar" type="ProgressBar" parent="Node/SmallHPHud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("8_yq6os")
+theme_override_styles/fill = ExtResource("9_0wno5")
+value = 70.0
+show_percentage = false
+
+[node name="DurabilityBar" type="ProgressBar" parent="Node/SmallHPHud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("11_3ucks")
+theme_override_styles/fill = SubResource("StyleBoxFlat_uanwm")
+value = 50.0
+show_percentage = false
+
+[node name="ShieldBar" type="ProgressBar" parent="Node/SmallHPHud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = ExtResource("13_3bwlv")
+theme_override_styles/fill = ExtResource("14_f73gg")
+value = 30.0
+show_percentage = false
+
 [node name="DebugHealth" type="Label" parent="Node"]
 offset_top = 17.0
 offset_right = 105.0
 offset_bottom = 44.0
-text = "HP
-DUR"
+text = "HULL
+DUR
+SHLD"
 label_settings = SubResource("LabelSettings_cs8pd")
 script = SubResource("GDScript_yq6os")
 
 [connection signal="CharacterReload" from="." to="." method="ManageReload"]
 [connection signal="CharacterShoot" from="." to="." method="ManageShot"]
+[connection signal="Died" from="HealthComponent" to="." method="OnDeath"]
 [connection signal="child_entered_tree" from="Inventory" to="Inventory" method="on_ChildEnteredTree"]

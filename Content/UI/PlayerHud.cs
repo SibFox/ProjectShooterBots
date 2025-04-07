@@ -24,25 +24,16 @@ public partial class PlayerHud : Control
 	private Label DebugRecoil => GetNode<Label>("%DebugRecoil");
 	private GridContainer ClipSize => GetNode<GridContainer>("%ClipSize");
 
-	private StyleBox _durabilityBarFillTheme;
-	private Color _durabilityBarStoredColor;
-	private Color _durabilityExposedColor = Colors.Brown;
-
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Global.Events.CharacterSwitchedWeapon += _on_PlayerSwitchWeapon;
-
-		_durabilityBarFillTheme = DurabilityBar.GetThemeStylebox("fill");
+		Global.Events.CharacterSwitchedWeapon += OnPlayerSwitchWeapon;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-			// Connect(GameEvents.SignalName.CharacterSwitchedWeapon, new Callable(this, "_on_PlayerSwitchWeapon"));
-		
-
 		Size = GetViewport().GetVisibleRect().Size;
 		OverallPanel.SetSize(new(1280/2, OverallPanel.Size.Y));
 		OverallPanel.SetPosition(new(Size.X / 2 - OverallPanel.Size.X / 2, GetViewport().GetVisibleRect().Size.Y - OverallPanel.Size.Y));
@@ -55,6 +46,7 @@ public partial class PlayerHud : Control
 			HealthBars();
 			if (weapon != null)
 				WeaponInHands();
+			FancieExpose();
 		}
 	}
 
@@ -101,7 +93,7 @@ public partial class PlayerHud : Control
 		ReloadSign.Visible = Mathf.IsZeroApprox(weapon.ClipAmmoCurrent) & weapon.AmmoStored > 0;
 		EmptySign.Visible = Mathf.IsZeroApprox(weapon.ClipAmmoCurrent) & Mathf.IsZeroApprox(weapon.AmmoStored);
 
-		DebugRecoil.Text = $"{Mathf.RadToDeg(weapon.CalculatedDeviation):N2}\t|\t{weapon.CalculatedDeviation:N2}";
+		DebugRecoil.Text = $"{Mathf.RadToDeg(weapon.CalculatedDeviation):N2}°\t|\t{weapon.CalculatedDeviation:N2}㎭";
 
 		foreach (ColorRect rect in ClipSize.GetChildren().Cast<ColorRect>())
 		{
@@ -130,7 +122,27 @@ public partial class PlayerHud : Control
 		}
 	}
 
-	private void _on_PlayerSwitchWeapon(Weapon currentWeapon, Weapon previousWeapon, Character character)
+	private void FancieExpose()
+    {
+        StyleBoxFlat hullFill = HullBar.GetThemeStylebox("fill") as StyleBoxFlat;//.Duplicate() as StyleBoxFlat;
+		StyleBoxFlat durFill = DurabilityBar.GetThemeStylebox("fill") as StyleBoxFlat;//.Duplicate() as StyleBoxFlat;
+
+        if (component.IsExposed)
+        {
+            hullFill.BgColor = new Color(.92f, .12f, 0);
+            durFill.BorderColor = new Color(.75f, .65f, .18f, .68f);
+        }
+        else
+        {
+            hullFill.BgColor = Colors.DarkRed;
+			durFill.BorderColor = new Color(1f, .96f, .34f, .67f);			
+        }
+
+        // HullBar.AddThemeStyleboxOverride("fill", hullFill);
+		// DurabilityBar.AddThemeStyleboxOverride("fill", durFill);
+    }
+
+	private void OnPlayerSwitchWeapon(Weapon currentWeapon, Weapon previousWeapon, Character character)
 	{
 		if (character is Player)
 		{

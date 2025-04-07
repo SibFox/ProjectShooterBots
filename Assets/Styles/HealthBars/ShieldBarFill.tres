@@ -1,6 +1,7 @@
 [gd_resource type="StyleBoxFlat" format=3 uid="uid://deq5p28fpx4is"]
 
 [resource]
+resource_local_to_scene = true
 bg_color = Color(0.312683, 0.599337, 0.999992, 1)
 skew = Vector2(0.5, 0)
 border_width_left = 1

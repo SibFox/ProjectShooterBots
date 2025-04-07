@@ -118,9 +118,9 @@ public partial class HealthComponent : Node2D
 				IsHeal = previousDur <= currentDurability
 			};
 			EmitSignal(SignalName.DurabilityChanged, durUpdate);
-			if (HasDurability & !HasDurabilityRemaining && !isExposed)
+			if (HasDurability & !HasDurabilityRemaining && !IsExposed)
 			{
-				isExposed = true;
+				IsExposed = true;
 				EmitSignal(SignalName.HullExposed);
 			}
 		}
@@ -151,7 +151,7 @@ public partial class HealthComponent : Node2D
 
 	public bool IsDamaged => CurrentHullPoints < MaxHullPoints;
 
-	public bool isExposed { get; private set; }
+	public bool IsExposed { get; private set; }
 	public bool hasDied { get; private set; }
 	private double maxHullPoints = 2000;
 	private double maxDurability = 300;
@@ -175,29 +175,29 @@ public partial class HealthComponent : Node2D
 
 	public void Damage(double hullDamage, double durabilityDamage, double shieldDamage = 0, bool forceHideDamage = false)
 	{
-		StringBuilder debug = new();
-		debug.Append($"{DateTime.Now:HH:mm:ss:fff} [HealthComponent] ");
+		// StringBuilder debug = new();
+		// debug.Append($"{DateTime.Now:HH:mm:ss:fff} [HealthComponent] ");
 		if (HasShield & HasShieldRemaining)
 		{
 			CurrentShield -= shieldDamage;
-			debug.Append($"Щит: {shieldDamage:N2}; ");
+			// debug.Append($"Щит: {shieldDamage:N2}; ");
 		}
 		else
 		{
-			if (!isExposed)
+			if (!IsExposed)
 			{
 				CurrentDurability -= durabilityDamage;
 				CurrentHullPoints -= hullDamage * 0.3;
-				debug.Append($"Прочность: {durabilityDamage:N2}; Корпус: {hullDamage * 0.3:N2}");
+				// debug.Append($"Прочность: {durabilityDamage:N2}; Корпус: {hullDamage * 0.3:N2}");
 			}
 			else
 			{
 				CurrentHullPoints -= hullDamage;
-				debug.Append($"Корпус: {hullDamage:N2}");
+				// debug.Append($"Корпус: {hullDamage:N2}");
 			}
 		}
 
-		GD.Print(debug.ToString());
+		// GD.Print(debug.ToString());
 
 		if (!forceHideDamage)
 		{
