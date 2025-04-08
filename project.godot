@@ -139,9 +139,9 @@ locale/translations=PackedStringArray("res://Localization/weapons.en.translation
 
 [layer_names]
 
-2d_physics/layer_1="Character"
+2d_physics/layer_1="Characters"
 2d_physics/layer_2="Projectiles"
-2d_physics/layer_4="Pickups"
+2d_physics/layer_4="WorldObjects"
 2d_physics/layer_5="HardTiles"
 2d_physics/layer_6="HalfTiles"
 2d_physics/layer_7="HollowTiles"

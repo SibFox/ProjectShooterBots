@@ -1,7 +1,63 @@
-[gd_scene load_steps=3 format=3 uid="uid://bntd83iurjop1"]
+[gd_scene load_steps=9 format=3 uid="uid://bntd83iurjop1"]
 
 [ext_resource type="PackedScene" uid="uid://b81l8dmm5tgh6" path="res://Content/Entities/Characters/Character.tscn" id="1_gki31"]
 [ext_resource type="Script" uid="uid://cxjhyx08rag0f" path="res://Content/Entities/Characters/NPCs/NPC.cs" id="2_2c6dp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_63gw6"]
+resource_local_to_scene = true
+bg_color = Color(0.6, 0.6, 0.6, 0)
+skew = Vector2(0.5, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0, 0, 1)
+border_blend = true
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytk4m"]
+resource_local_to_scene = true
+bg_color = Color(0.92, 0.122667, 0, 1)
+skew = Vector2(0.5, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.133333, 0, 0.27451)
+border_blend = true
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_klctw"]
+resource_local_to_scene = true
+bg_color = Color(0.6, 0.6, 0.6, 0)
+skew = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5oqq"]
+resource_local_to_scene = true
+bg_color = Color(0.92, 0.122667, 0, 0)
+skew = Vector2(0.5, 0)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.65625, 0.1875, 0.686275)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6caf3"]
+resource_local_to_scene = true
+bg_color = Color(0.6, 0.6, 0.6, 0)
+skew = Vector2(0.5, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2vfu"]
+resource_local_to_scene = true
+bg_color = Color(0.312683, 0.599337, 0.999992, 1)
+skew = Vector2(0.5, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.45098, 0.937255, 1)
+border_blend = true
+anti_aliasing = false
 
 [node name="BaseNPC" groups=["NPC"] instance=ExtResource("1_gki31")]
 script = ExtResource("2_2c6dp")
@@ -11,3 +67,15 @@ CharacterStats = null
 MaxHullPoints = 3000.0
 MaxDurability = 500.0
 MaxShield = 300.0
+
+[node name="HullBar" parent="Node/SmallHPHud" index="0"]
+theme_override_styles/background = SubResource("StyleBoxFlat_63gw6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ytk4m")
+
+[node name="DurabilityBar" parent="Node/SmallHPHud" index="1"]
+theme_override_styles/background = SubResource("StyleBoxFlat_klctw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d5oqq")
+
+[node name="ShieldBar" parent="Node/SmallHPHud" index="2"]
+theme_override_styles/background = SubResource("StyleBoxFlat_6caf3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b2vfu")

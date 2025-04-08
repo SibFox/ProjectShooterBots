@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://uyp552o3gx4c"]
+
+[ext_resource type="Script" uid="uid://b7f6a7ii62h0j" path="res://Content/WorldObjects/MapObject.cs" id="1_88whq"]
+
+[node name="MapObject" type="CharacterBody2D" groups=["Map Object"]]
+script = ExtResource("1_88whq")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="InteractShape" type="CollisionShape2D" parent="InteractArea"]
+debug_color = Color(0.7, 0.56, 0, 0.419608)
+
+[connection signal="body_entered" from="InteractArea" to="." method="OnInteractAreaEnter"]
