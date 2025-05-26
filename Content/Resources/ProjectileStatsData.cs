@@ -34,8 +34,6 @@ public partial class ProjectileStatsData : Resource
 	[Export(PropertyHint.Range, "0, 300, 1, or_greater")]
 	public int PiercingStrength = 30;
 	[Export]
-	public bool IsExplosion;
-	[Export]
 	public bool CanHitOwner = true;
 
 	

@@ -38,6 +38,17 @@ public partial class Player : Character
 		}
 	}
 
+    // protected override void OnDeath()
+    // {
+    //     GetTree().PhysicsFrame += Queue;
+    // }
+
+	// void Queue()
+	// {
+	// 	GetTree().Quit();
+	// }
+
+
 	public override void _UnhandledInput(InputEvent @event)
     {
 		if (@event.IsActionPressed("equip_weapon_previous"))

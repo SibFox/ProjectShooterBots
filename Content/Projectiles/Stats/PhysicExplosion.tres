@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ProjectileStatsData" load_steps=4 format=3 uid="uid://b6yxf3cq170lo"]
+
+[ext_resource type="Script" uid="uid://cuaska8f5xb6i" path="res://Content/Resources/DamageTypes/PhysicalDamage.cs" id="1_ny0ip"]
+[ext_resource type="Script" uid="uid://d3b2q2vxgi63k" path="res://Content/Resources/ProjectileStatsData.cs" id="2_0j5g2"]
+
+[sub_resource type="Resource" id="Resource_ny0ip"]
+script = ExtResource("1_ny0ip")
+metadata/_custom_type_script = "uid://cuaska8f5xb6i"
+
+[resource]
+script = ExtResource("2_0j5g2")
+DamageMultiplier = 1.0
+DamageHullMultiplier = 1.0
+DamageDurabilityMultiplier = 1.0
+DamageShieldMultiplier = 1.0
+CritChanceMultiplier = 1.0
+CritDamageMultiplier = 1.0
+WeakpointDamageMultiplier = 1.0
+ArmorPierncingMultiplier = 1.0
+ProjectileType = 2
+DamageType = SubResource("Resource_ny0ip")
+RicochetAmount = 0
+RicochetChance = 0.0
+PiercingStrength = 1000
+CanHitOwner = true
+metadata/_custom_type_script = "uid://d3b2q2vxgi63k"

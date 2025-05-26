@@ -13,7 +13,7 @@ public partial class HitboxComponent : Area2D
 	[Export(PropertyHint.Range, "0, 1000, 1, or_greater")]
 	private double shieldDamage;
 	[Export(PropertyHint.ResourceType, "DamageType")]
-	private DamageType damageType;
+	public DamageType DamageType;
 
 	public double HullDamage
 	{

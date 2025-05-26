@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://h3uexi1ufnhu"]
+
+[ext_resource type="PackedScene" uid="uid://cw4k8myees11l" path="res://Content/Projectiles/BaseProjectile.tscn" id="1_g05ip"]
+[ext_resource type="Resource" uid="uid://b6yxf3cq170lo" path="res://Content/Projectiles/Stats/PhysicExplosion.tres" id="2_e6h6t"]
+[ext_resource type="Texture2D" uid="uid://cxologp0gydlo" path="res://Assets/GFX/eeexplosion.png" id="3_g05ip"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e6h6t"]
+radius = 125.0
+
+[node name="PhysicExplosion" instance=ExtResource("1_g05ip")]
+Stats = ExtResource("2_e6h6t")
+
+[node name="Hitbox" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_e6h6t")
+
+[node name="CPUParticles" type="CPUParticles2D" parent="." index="5"]
+emitting = false
+amount = 60
+texture = ExtResource("3_g05ip")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.2
+direction = Vector2(5, 5)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 240.0
+initial_velocity_max = 480.0
+damping_min = 30.0
+damping_max = 30.0
+angle_max = 360.0
+scale_amount_max = 2.5

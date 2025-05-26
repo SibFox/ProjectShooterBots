@@ -10,13 +10,14 @@ public partial class Projectile : CharacterBody2D
 
 
 	public Weapon sourceWeapon { get; private set; }
-	public Character projectileOwner { get; private set; }
-	public double baseHullDamage { get; private set; }
-	public double baseDurabilityDamage { get; private set; }
-	public double baseCritChance { get; private set; }
-	public double baseCritDamage { get; private set; }
-	public double baseWeakpointDamage { get; private set; }
-	public double baseArmorPierce { get; private set; }
+	public Node2D projectileOwner { get; private set; }
+	public DamageData damageData { get; private set; }
+	// public double baseHullDamage { get; private set; }
+	// public double baseDurabilityDamage { get; private set; }
+	// public double baseCritChance { get; private set; }
+	// public double baseCritDamage { get; private set; }
+	// public double baseWeakpointDamage { get; private set; }
+	// public double baseArmorPierce { get; private set; }
 	public double baseMaxDistance { get; private set; }
 	public double baseEffectiveDistance { get; private set; }
 	public bool Crit { get; private set; }
@@ -35,6 +36,8 @@ public partial class Projectile : CharacterBody2D
 	public int ricochetAmount { get; private set; }
 	public double remainedDistance { get; private set; }
 	public double remainedEffectiveDistance { get; private set; }
+
+	public bool IsExplosion => Stats.ProjectileType == ProjectileDatabase.ProjectileType.Explosion;
 	
 	public override void _Ready()
 	{	
@@ -47,6 +50,7 @@ public partial class Projectile : CharacterBody2D
 
 		ApplyDefaults();
 
+		GetNode<CpuParticles2D>("CPUParticles").Emitting = true;
 		active = true;
 	}
 
@@ -55,11 +59,11 @@ public partial class Projectile : CharacterBody2D
 	/// </summary>
 	protected virtual void ApplyDefaults()
 	{
-		Crit = Main.Rand.Percent(baseCritChance + 10);
-		double rangeMultiplier = Main.Rand.RanddRange(sourceWeapon.Stats.DamageVariatyLowest, sourceWeapon.Stats.DamageVariatyHighest);
-		hitboxComponent.HullDamage = baseHullDamage * Stats.DamageHullMultiplier * rangeMultiplier;
-		hitboxComponent.DurabilityDamage = baseDurabilityDamage * Stats.DamageDurabilityMultiplier * rangeMultiplier;
-		hitboxComponent.ShieldDamage = baseHullDamage * Stats.DamageShieldMultiplier * rangeMultiplier;
+		Crit = Main.Rand.Percent(damageData.CritChance + 10);
+		double rangeMultiplier = Main.Rand.RanddRange(damageData.DamageVariatyLowest, damageData.DamageVariatyHighest);
+		hitboxComponent.HullDamage = damageData.HullDamage * Stats.DamageHullMultiplier * rangeMultiplier;
+		hitboxComponent.DurabilityDamage = damageData.DurabilityDamage * Stats.DamageDurabilityMultiplier * rangeMultiplier;
+		hitboxComponent.ShieldDamage = damageData.HullDamage * Stats.DamageShieldMultiplier * rangeMultiplier;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -68,6 +72,12 @@ public partial class Projectile : CharacterBody2D
 		PreUpdate(calculatedDelta);
 		Update(calculatedDelta);
 		PostUpdate(calculatedDelta);
+
+		if (IsExplosion)
+		{
+			// Callable call = Callable.From(() => _QueueKill(0));
+			GetTree().PhysicsFrame += QueueFree;
+		}
 	}
 
 
@@ -86,7 +96,7 @@ public partial class Projectile : CharacterBody2D
 	void PostUpdate(double delta)
 	{
 		if (IsQueuedForDeletion())
-			CallDeferred(nameof(OnKill), remainedDistance);
+			CallDeferred(nameof(BeforeKill), remainedDistance);
 	}
 
 	void _QueueKill(double leftDistance)
@@ -102,6 +112,14 @@ public partial class Projectile : CharacterBody2D
 		// if (leftDistance < 0) return true;
 
 		return true;
+	}
+
+	void BeforeKill(double leftDistance)
+	{
+		if (IsExplosion)
+			GetNode<CpuParticles2D>("CPUParticles").Reparent(Global.Main.ActiveLevel.Particles);
+
+		OnKill(leftDistance);
 	}
 
 	protected virtual void OnKill(double leftDistance) {}
@@ -146,7 +164,7 @@ public partial class Projectile : CharacterBody2D
 	protected virtual void OnRichochet(Node2D body) {}
 
 
-	public static void NewProjectileFromWeapon(Weapon weapon, PackedScene projectileScene, Character owner, Vector2 spawnPosition, Vector2 spawnVelocity)
+	public static void NewProjectileFromWeapon(Weapon weapon, PackedScene projectileScene, Node2D owner, Vector2 spawnPosition, Vector2 spawnVelocity)
 	{
 		Projectile projectile = projectileScene.Instantiate<Projectile>();
 		projectile.GlobalPosition = spawnPosition;
@@ -156,14 +174,28 @@ public partial class Projectile : CharacterBody2D
 		projectile.sourceWeapon = weapon;
 		projectile.projectileOwner = owner;
 
-		projectile.baseHullDamage = weapon.Stats.HullDamage;
-		projectile.baseDurabilityDamage = weapon.Stats.DurabilityDamage;
-		projectile.baseCritChance = weapon.Stats.CritChance;
-		projectile.baseCritDamage = weapon.Stats.CritDamage;
+		projectile.damageData = (DamageData)weapon.Stats.Damage.Duplicate();
 		projectile.baseMaxDistance = weapon.Stats.MaxDistance;
 		projectile.baseEffectiveDistance = weapon.Stats.EffectiveDistance;
 
 		Global.Main.AddProjectileToLevel(projectile);
 		GameEvents.EmitNewProjectileFromWeapon(weapon, projectile, owner, spawnPosition, spawnVelocity);
+	}
+
+	public static void NewProjectileFromDamageData(DamageData damageData, PackedScene projectileScene, Node2D owner, Vector2 spawnPosition, Vector2 spawnVelocity, double maxDistance)
+	{
+		Projectile projectile = projectileScene.Instantiate<Projectile>();
+		projectile.GlobalPosition = spawnPosition;
+		projectile.velocityComponent.Velocity = spawnVelocity;
+		projectile.Rotation = projectile.velocityComponent.Velocity.Angle();
+
+		projectile.projectileOwner = owner;
+
+		projectile.damageData = (DamageData)damageData.Duplicate();
+		projectile.baseMaxDistance = maxDistance;
+		projectile.baseEffectiveDistance = maxDistance;
+
+		Global.Main.AddProjectileToLevel(projectile);
+		GameEvents.EmitNewProjectileFromDamageData(damageData, projectile, owner, spawnPosition, spawnVelocity);
 	}
 }

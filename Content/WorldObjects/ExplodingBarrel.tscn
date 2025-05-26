@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddf21qv1lvkek"]
+
+[ext_resource type="PackedScene" uid="uid://uyp552o3gx4c" path="res://Content/WorldObjects/MapObject.tscn" id="1_0gb6y"]
+[ext_resource type="PackedScene" uid="uid://2sgej4a0o8f3" path="res://Components/HealthComponent.tscn" id="2_00n5g"]
+[ext_resource type="Script" uid="uid://3yx0vmscnt88" path="res://Content/WorldObjects/ExplodingBarrel.cs" id="2_f1wbb"]
+[ext_resource type="PackedScene" uid="uid://h3uexi1ufnhu" path="res://Content/Projectiles/PhysicExplosion.tscn" id="3_00n5g"]
+[ext_resource type="Script" uid="uid://cu6uh1do82gwt" path="res://Components/HurtboxComponent.cs" id="3_f1wbb"]
+[ext_resource type="AudioStream" uid="uid://dt3o8o2siotok" path="res://Assets/SFX/Sounds/Very Loud Explosion Short.ogg" id="6_f1wbb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_00n5g"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kk5kj"]
+resource_local_to_scene = true
+radius = 30.0
+
+[node name="ExplodingBarrel" instance=ExtResource("1_0gb6y")]
+z_index = -5
+disable_mode = 1
+collision_layer = 40
+collision_mask = 3
+script = ExtResource("2_f1wbb")
+ExplosionProjectileScene = ExtResource("3_00n5g")
+HullDamage = 50000.0
+DurabilityDamage = 1000.0
+
+[node name="CollisionShape" parent="." index="1"]
+shape = SubResource("CircleShape2D_00n5g")
+
+[node name="HealthComponent" parent="." index="3" instance=ExtResource("2_00n5g")]
+MaxHullPoints = 500.0
+MaxDurability = 0.0
+
+[node name="HurtboxComponent" type="Area2D" parent="." index="4" node_paths=PackedStringArray("healthComponent")]
+collision_layer = 40
+collision_mask = 2
+script = ExtResource("3_f1wbb")
+healthComponent = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://cu6uh1do82gwt"
+
+[node name="Hurtbox" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+top_level = true
+shape = SubResource("CircleShape2D_kk5kj")
+debug_color = Color(0.939095, 0.220943, 0.291559, 0.42)
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="." index="5"]
+stream = ExtResource("6_f1wbb")
+
+[connection signal="Died" from="HealthComponent" to="." method="Explode"]
+[connection signal="HullChanged" from="HealthComponent" to="." method="HullChanged"]
+[connection signal="HitByHitbox" from="HurtboxComponent" to="." method="HitByHitbox"]
+[connection signal="HitByProjectile" from="HurtboxComponent" to="." method="HitByProjectile"]

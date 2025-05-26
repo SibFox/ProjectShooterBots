@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dt3o8o2siotok"
+path="res://.godot/imported/Very Loud Explosion Short.ogg-4214ff6b307f2eb10e894101112b2750.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/SFX/Sounds/Very Loud Explosion Short.ogg"
+dest_files=["res://.godot/imported/Very Loud Explosion Short.ogg-4214ff6b307f2eb10e894101112b2750.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

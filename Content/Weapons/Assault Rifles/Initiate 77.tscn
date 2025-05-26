@@ -1,23 +1,29 @@
-[gd_scene load_steps=13 format=3 uid="uid://db030jkkm3r8s"]
+[gd_scene load_steps=15 format=3 uid="uid://db030jkkm3r8s"]
 
 [ext_resource type="PackedScene" uid="uid://blthu7uttjv4q" path="res://Content/Weapons/Weapon.tscn" id="1_52q10"]
 [ext_resource type="Script" uid="uid://ccwg2kkkkejyn" path="res://Content/Resources/WeaponStatsData.cs" id="2_4cvw0"]
 [ext_resource type="PackedScene" uid="uid://tuccclqf8lpy" path="res://Content/Projectiles/PulseBullet.tscn" id="2_84qon"]
+[ext_resource type="Script" uid="uid://83vnyl24y8tl" path="res://Content/Resources/DamageData.cs" id="2_k1kt0"]
 [ext_resource type="Texture2D" uid="uid://delpdg4lvmwh4" path="res://Assets/Weapons/Pistol.png" id="4_02xa1"]
 [ext_resource type="AudioStream" uid="uid://dib17mn6jmuvw" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shot_pistol_police_C_Fusion.ogg" id="4_rwdc7"]
 [ext_resource type="AudioStream" uid="uid://cwd0bdgttahkc" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_eject_ar_police_A_Fusion.ogg" id="5_g8y7h"]
 [ext_resource type="AudioStream" uid="uid://bujsvi0beilec" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snr_reload_ar_police_A.ogg" id="6_j0wgk"]
 
-[sub_resource type="Resource" id="Resource_wqlw8"]
-script = ExtResource("2_4cvw0")
-WeaponType = 3
+[sub_resource type="Resource" id="Resource_f1uli"]
+script = ExtResource("2_k1kt0")
 HullDamage = 180.0
 DurabilityDamage = 22.0
 DamageVariatyLowest = 0.8
 DamageVariatyHighest = 1.1
 CritChance = 0.0
 CritDamage = 1.5
-ArmorPiering = 3
+ArmorPierce = 0
+metadata/_custom_type_script = "uid://83vnyl24y8tl"
+
+[sub_resource type="Resource" id="Resource_wqlw8"]
+script = ExtResource("2_4cvw0")
+WeaponType = 3
+Damage = SubResource("Resource_f1uli")
 RateOfFire = 0.12
 ClipSize = 27
 ClipGain = 2.2

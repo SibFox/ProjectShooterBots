@@ -64,8 +64,8 @@ script = ExtResource("2_2c6dp")
 CharacterStats = null
 
 [node name="HealthComponent" parent="." index="1"]
-MaxHullPoints = 3000.0
-MaxDurability = 500.0
+MaxHullPoints = 1500.0
+MaxDurability = 200.0
 MaxShield = 300.0
 
 [node name="HullBar" parent="Node/SmallHPHud" index="0"]

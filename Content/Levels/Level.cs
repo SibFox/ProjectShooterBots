@@ -7,6 +7,7 @@ public partial class Level : Node
 	public Node2D Players => GetNode<Node2D>("Entities/Players");
 	public Node2D NPCs => GetNode<Node2D>("Entities/NPCs");
 	public Node2D MapObjects => GetNode<Node2D>("MapObjects");
+	public Node2D Particles => GetNode<Node2D>("Particles");
 	public Vector2 PlayerSpawnPosition => GetNode<Marker2D>("SpawnPoints/PlayerSpawnPoint").Position;
 	
 

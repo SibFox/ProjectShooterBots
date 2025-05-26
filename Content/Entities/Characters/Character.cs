@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Design;
 using Godot;
 
@@ -71,6 +72,8 @@ public partial class Character : CharacterBody2D
 	{
 		weapon?.ActionReload();
 	}
+
+	protected virtual void OnHit(HealthComponent.HullUpdate hullUpdate) {}
 
 	protected virtual void OnDeath()
 	{

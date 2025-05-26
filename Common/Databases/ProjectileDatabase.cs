@@ -6,7 +6,8 @@ public partial class ProjectileDatabase : Node
     public enum ProjectileType
     {
         Balistic,
-        Hitscan
+        Hitscan,
+        Explosion
     }
 
 
@@ -19,10 +20,11 @@ public partial class ProjectileDatabase : Node
         return null;
 	}	
     
-    Dictionary<string, string> Scenes = new();
+    Dictionary<string, string> Scenes = [];
 
     public override void _Ready()
     {
         Scenes.Add("Pulse Bullet", "res://Content/Projectiles/PulseBullet.tscn");
+        Scenes.Add("Physic Explosion", "res://Content/Projectiles/PhysicExplosion.tscn");
     }
 }

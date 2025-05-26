@@ -8,4 +8,7 @@ public partial class PulseBullet : Projectile
 		Stats.RicochetChance -= 30;
 	}
 
+	protected override void OnHit(Area2D area) {}
+
+
 }

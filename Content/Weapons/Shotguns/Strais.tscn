@@ -1,22 +1,28 @@
-[gd_scene load_steps=11 format=3 uid="uid://c61vne7vonq6f"]
+[gd_scene load_steps=13 format=3 uid="uid://c61vne7vonq6f"]
 
 [ext_resource type="PackedScene" uid="uid://blthu7uttjv4q" path="res://Content/Weapons/Weapon.tscn" id="1_gb1es"]
 [ext_resource type="Texture2D" uid="uid://delpdg4lvmwh4" path="res://Assets/Weapons/Pistol.png" id="2_1sbyv"]
+[ext_resource type="Script" uid="uid://83vnyl24y8tl" path="res://Content/Resources/DamageData.cs" id="2_35l1q"]
 [ext_resource type="PackedScene" uid="uid://tuccclqf8lpy" path="res://Content/Projectiles/PulseBullet.tscn" id="2_w2ofw"]
 [ext_resource type="Script" uid="uid://ccwg2kkkkejyn" path="res://Content/Resources/WeaponStatsData.cs" id="3_dqfba"]
 [ext_resource type="AudioStream" uid="uid://c7e1y7uf63p5r" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shot_shotgun_police_D.ogg" id="4_y6jrx"]
 [ext_resource type="AudioStream" uid="uid://bma6r46akrqt" path="res://Assets/SFX/Sounds/Synthetic/Weapons/snd_shotgun_reload_A.ogg" id="5_lroyx"]
 
-[sub_resource type="Resource" id="Resource_606ju"]
-script = ExtResource("3_dqfba")
-WeaponType = 5
+[sub_resource type="Resource" id="Resource_p3d7e"]
+script = ExtResource("2_35l1q")
 HullDamage = 300.0
 DurabilityDamage = 35.0
 DamageVariatyLowest = 0.85
-DamageVariatyHighest = 1.25
+DamageVariatyHighest = 1.12
 CritChance = 0.0
 CritDamage = 1.5
-ArmorPiering = 10
+ArmorPierce = 0
+metadata/_custom_type_script = "uid://83vnyl24y8tl"
+
+[sub_resource type="Resource" id="Resource_606ju"]
+script = ExtResource("3_dqfba")
+WeaponType = 5
+Damage = SubResource("Resource_p3d7e")
 RateOfFire = 0.4
 ClipSize = 4
 ClipGain = 3.0

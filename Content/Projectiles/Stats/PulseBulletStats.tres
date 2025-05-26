@@ -23,6 +23,5 @@ DamageType = SubResource("Resource_oycor")
 RicochetAmount = 2
 RicochetChance = 60.0
 PiercingStrength = 30
-IsExplosion = false
 CanHitOwner = true
 metadata/_custom_type_script = "uid://d3b2q2vxgi63k"

@@ -20,6 +20,7 @@ animations = [{
 [node name="AmmoPack" instance=ExtResource("1_7y1go")]
 scale = Vector2(2, 2)
 script = ExtResource("2_b1p25")
+Richness = 1
 
 [node name="AnimatedSprite" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_b1p25")

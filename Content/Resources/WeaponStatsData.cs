@@ -7,20 +7,8 @@ public partial class WeaponStatsData : Resource
 	[ExportGroup("Base")]
 	[Export]
 	public WeaponDatabase.WeaponType WeaponType;
-	[Export(PropertyHint.Range, "0, 1000, 1, or_greater")]
-	public double HullDamage = 100;
-	[Export(PropertyHint.Range, "0, 250, 1, or_greater")]
-	public double DurabilityDamage = 5;
-	[Export(PropertyHint.Range, "0.25, 1, 0.01")]
-	public double DamageVariatyLowest = 0.75;
-	[Export(PropertyHint.Range, "1, 1.5, 0.01")]
-	public double DamageVariatyHighest = 1.15;
-	[Export(PropertyHint.Range, "0, 100, 0.01")]
-	public double CritChance { get => critChance; set => critChance = value; }
-	[Export(PropertyHint.Range, "1, 3, 0.01")]
-	public double CritDamage = 1.5;
-	[Export(PropertyHint.Range, "0, 100, 1")]
-	public int ArmorPiering;
+	[Export]
+	public DamageData Damage;
 	[Export(PropertyHint.Range, "0.01, 3, 0.01")]
 	public double RateOfFire = 0.2;
 

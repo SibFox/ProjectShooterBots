@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://b7f6a7ii62h0j" path="res://Content/WorldObjects/MapObject.cs" id="1_88whq"]
 
 [node name="MapObject" type="CharacterBody2D" groups=["Map Object"]]
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("1_88whq")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]

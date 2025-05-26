@@ -276,7 +276,7 @@ public partial class Weapon : Node2D
 				if (Stats.ReloadType != WeaponDatabase.ReloadType.Pump)
 				{
 					SoundReload.Play();
-				}
+			}
 			}	
 		}
 	}

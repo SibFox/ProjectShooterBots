@@ -83,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 
 [node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("healthComponent", "hurtboxComponent", "velocityComponent") groups=["Character", "Entity"]]
 disable_mode = 1
-collision_mask = 16
+collision_mask = 48
 motion_mode = 1
 script = ExtResource("1_wmsn8")
 CharacterStats = SubResource("Resource_udxd1")
@@ -111,6 +111,7 @@ collision_mask = 2
 healthComponent = NodePath("../HealthComponent")
 
 [node name="Hurtbox" type="CollisionShape2D" parent="HurtboxComponent"]
+top_level = true
 shape = SubResource("CircleShape2D_yhkwp")
 debug_color = Color(0.939095, 0.220943, 0.291559, 0.42)
 
@@ -193,4 +194,5 @@ script = SubResource("GDScript_yq6os")
 [connection signal="CharacterReload" from="." to="." method="ManageReload"]
 [connection signal="CharacterShoot" from="." to="." method="ManageShot"]
 [connection signal="Died" from="HealthComponent" to="." method="OnDeath"]
+[connection signal="HullChanged" from="HealthComponent" to="." method="OnHit"]
 [connection signal="child_entered_tree" from="Inventory" to="Inventory" method="on_ChildEnteredTree"]
