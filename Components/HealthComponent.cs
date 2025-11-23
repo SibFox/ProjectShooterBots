@@ -73,6 +73,9 @@ public partial class HealthComponent : Node2D
 	public bool HasHullRemaining => !Mathf.IsEqualApprox(CurrentHullPoints, 0f);
 	public bool HasDurabilityRemaining => !Mathf.IsEqualApprox(CurrentDurability, 0f);
 	public bool HasShieldRemaining => !Mathf.IsEqualApprox(CurrentShield, 0f);
+	public bool IsHullMax => Mathf.IsEqualApprox(CurrentHullPoints, 1f);
+	public bool IsDurabilityMax => Mathf.IsEqualApprox(CurrentDurability, 1f);
+	public bool IsShieldMax => Mathf.IsEqualApprox(CurrentShield, 1f);
 	public double CurrentHullPointsPercent => MaxHullPoints > 0 ? currentHullPoints / MaxHullPoints : 0f;
 	public double CurrentDurabilityPercent => MaxDurability > 0 ? currentDurability / MaxDurability : 0f;
 	public double CurrentShieldPercent => MaxShield > 0 ? currentShield / MaxShield : 0f;
@@ -176,7 +179,7 @@ public partial class HealthComponent : Node2D
 	public void Damage(double hullDamage, double durabilityDamage, double shieldDamage = 0, bool forceHideDamage = false)
 	{
 		StringBuilder debug = new();
-		debug.Append($"{DateTime.Now:HH:mm:ss:fff} [HealthComponent] ");
+		debug.Append($"{DateTime.Now:HH:mm:ss:fff} [HealthComponent] [Damage] ");
 		if (HasShield & HasShieldRemaining)
 		{
 			CurrentShield -= shieldDamage;
@@ -205,9 +208,34 @@ public partial class HealthComponent : Node2D
 		}
 	}
 
-	public void Heal(double hull, double durability)
+	public void Heal(double hull, double durability, double shield, bool forceHideHeal = false)
 	{
-		Damage(-hull, -durability);
+		if (hull != 0)
+        {
+            CurrentHullPoints += hull;
+			if (!forceHideHeal)
+            {
+                
+            }
+        }
+		if (durability != 0)
+        {
+            CurrentDurability += durability;
+			if (IsExposed && IsDurabilityMax)
+				IsExposed = false;
+			if (!forceHideHeal)
+            {
+                
+            }
+        }
+		if (shield != 0)
+        {
+            CurrentShield += shield;
+			if (!forceHideHeal)
+            {
+                
+            }
+        }
 	}
 
 	private void InitializeHealth()

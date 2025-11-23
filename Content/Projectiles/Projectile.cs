@@ -20,7 +20,7 @@ public partial class Projectile : CharacterBody2D
 	// public double baseArmorPierce { get; private set; }
 	public double baseMaxDistance { get; private set; }
 	public double baseEffectiveDistance { get; private set; }
-	public bool Crit { get; private set; }
+	public bool IsCrit { get; private set; }
 	
 	private double timeFactor = 1f;
 	
@@ -59,7 +59,7 @@ public partial class Projectile : CharacterBody2D
 	/// </summary>
 	protected virtual void ApplyDefaults()
 	{
-		Crit = Main.Rand.Percent(damageData.CritChance + 10);
+		IsCrit = Main.Rand.Percent(damageData.CritChance + 10);
 		double rangeMultiplier = Main.Rand.RanddRange(damageData.DamageVariatyLowest, damageData.DamageVariatyHighest);
 		hitboxComponent.HullDamage = damageData.HullDamage * Stats.DamageHullMultiplier * rangeMultiplier;
 		hitboxComponent.DurabilityDamage = damageData.DurabilityDamage * Stats.DamageDurabilityMultiplier * rangeMultiplier;
@@ -116,8 +116,11 @@ public partial class Projectile : CharacterBody2D
 
 	void BeforeKill(double leftDistance)
 	{
-		if (IsExplosion)
-			GetNode<CpuParticles2D>("CPUParticles").Reparent(Global.Main.ActiveLevel.Particles);
+		// if (IsExplosion)
+		var particles = GetNode<CpuParticles2D>("CPUParticles");
+		particles.OneShot = true;
+		// particles.Lifetime = 0.1;
+		particles.Reparent(Global.Main.ActiveLevel.Particles);
 
 		OnKill(leftDistance);
 	}

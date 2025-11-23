@@ -17,6 +17,7 @@ public partial class Player : Character
 	{
 		LookAt(GetGlobalMousePosition());
 		HandleInputs();
+		base.CustomUpdate(delta);
 	}
 
 	void HandleInputs()
@@ -27,7 +28,7 @@ public partial class Player : Character
 			if (((weapon.Stats.ShootType == WeaponDatabase.ShootType.Single & Input.IsActionJustPressed("action_primary")) |
 				(weapon.Stats.ShootType == WeaponDatabase.ShootType.Auto & Input.IsActionPressed("action_primary"))) & weapon.BurstShotsDone == 0)
 			{
-				EmitSignal(SignalName.CharacterShoot, weapon, 0);
+				EmitSignal(SignalName.CharacterShoot, weapon, (long)MouseButton.Left);
 			}
 
 			if ((!weapon.Ejected & Input.IsActionJustPressed("action_eject")) | (weapon.Ejected & Input.IsActionJustPressed("action_reload")) |
@@ -37,6 +38,8 @@ public partial class Player : Character
 			}
 		}
 	}
+
+
 
     // protected override void OnDeath()
     // {

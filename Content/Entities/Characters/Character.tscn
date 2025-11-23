@@ -15,11 +15,15 @@
 [ext_resource type="StyleBox" uid="uid://cfyuj6t5ottft" path="res://Assets/Styles/HealthBars/NoColorBG.tres" id="13_3bwlv"]
 [ext_resource type="StyleBox" uid="uid://deq5p28fpx4is" path="res://Assets/Styles/HealthBars/ShieldBarFill.tres" id="14_f73gg"]
 
-[sub_resource type="Resource" id="Resource_udxd1"]
+[sub_resource type="Resource" id="Resource_uanwm"]
 script = ExtResource("2_xc881")
 Toughness = 50
 HullRecovery = 0.0
 DurabilityRecovery = 0.2
+DurabilityRecoveryCD = 3.0
+ShieldRecovery = 0.05
+ShieldRecoveryCD = 3.0
+metadata/_custom_type_script = "uid://crmernbqrhgcu"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yhkwp"]
 radius = 15.0
@@ -86,7 +90,7 @@ disable_mode = 1
 collision_mask = 48
 motion_mode = 1
 script = ExtResource("1_wmsn8")
-CharacterStats = SubResource("Resource_udxd1")
+CharacterStats = SubResource("Resource_uanwm")
 healthComponent = NodePath("HealthComponent")
 hurtboxComponent = NodePath("HurtboxComponent")
 velocityComponent = NodePath("VelocityComponent")
@@ -193,6 +197,12 @@ script = SubResource("GDScript_yq6os")
 
 [connection signal="CharacterReload" from="." to="." method="ManageReload"]
 [connection signal="CharacterShoot" from="." to="." method="ManageShot"]
+[connection signal="timeout" from="Timers/DurabilityRegenWait" to="." method="OnDurabilityRegenTimerTimeout"]
+[connection signal="timeout" from="Timers/ShieldRegenWait" to="." method="OnShieldRegenTimerTimeout"]
 [connection signal="Died" from="HealthComponent" to="." method="OnDeath"]
-[connection signal="HullChanged" from="HealthComponent" to="." method="OnHit"]
+[connection signal="DurabilityChanged" from="HealthComponent" to="." method="OnDurabilityChanged"]
+[connection signal="HullChanged" from="HealthComponent" to="." method="OnHullChanged"]
+[connection signal="HullExposed" from="HealthComponent" to="." method="OnHullExposed"]
+[connection signal="ShieldChanged" from="HealthComponent" to="." method="OnShieldChanged"]
+[connection signal="ShieldDestroyed" from="HealthComponent" to="." method="OnShieldDestroyed"]
 [connection signal="child_entered_tree" from="Inventory" to="Inventory" method="on_ChildEnteredTree"]

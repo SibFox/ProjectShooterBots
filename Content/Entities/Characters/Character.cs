@@ -1,12 +1,9 @@
-using System;
-using System.ComponentModel.Design;
 using Godot;
-
 
 public partial class Character : CharacterBody2D
 {
 	[Signal]
-	public delegate void CharacterShootEventHandler(Weapon weapon, int type);
+	public delegate void CharacterShootEventHandler(Weapon weapon, MouseButton type);
 	[Signal]
 	public delegate void CharacterReloadEventHandler(Weapon weapon);
 	
@@ -16,7 +13,7 @@ public partial class Character : CharacterBody2D
 	private protected double previousTimeFactor;
 
 
-	[Export(PropertyHint.ResourceType, "CharacterStats")]
+	[Export(PropertyHint.ResourceType, "CharacterStatsData")]
 	public CharacterStatsData CharacterStats;
 	[Export(PropertyHint.NodeType, "HealthComponent")]
 	public HealthComponent healthComponent;
@@ -46,8 +43,8 @@ public partial class Character : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		CalculatedDelta = delta * Global.GetCalculatedTimeFactor(timeFactor);
+		MandatoryLogic(CalculatedDelta);
 		UpdateVelocity(CalculatedDelta);
-
 		CustomUpdate(CalculatedDelta);
 	}
 
@@ -57,14 +54,29 @@ public partial class Character : CharacterBody2D
 		velocityComponent.Move(this);
 	}
 
-	protected virtual void CustomUpdate(double delta) {}
+	protected void MandatoryLogic(double delta)
+    {
+        
+    }
 
-	void ManageShot(Weapon weapon, int type)
+	protected virtual void CustomUpdate(double delta)
+    {
+        if (DurabilityRegenWaitTime.IsStopped() && healthComponent.CurrentHullPointsPercent < 1)
+        {
+			healthComponent.Heal(0, healthComponent.MaxDurability * CharacterStats.DurabilityRecovery * delta, 0);
+        }
+		if (ShieldRegenWaitTime.IsStopped() && healthComponent.CurrentShieldPercent < 1)
+        {
+            healthComponent.Heal(0, 0, healthComponent.MaxShield * CharacterStats.ShieldRecovery * delta);
+        }
+    }
+
+	void ManageShot(Weapon weapon, MouseButton type)
 	{
 		switch (type)
 		{
-			case 0: weapon?.ActionPrimary(); break;
-			case 1: weapon?.ActionSecondary(); break;
+			case MouseButton.Left: weapon?.ActionPrimary(); break;
+			case MouseButton.Right: weapon?.ActionSecondary(); break;
 		}
 	}
 
@@ -73,7 +85,27 @@ public partial class Character : CharacterBody2D
 		weapon?.ActionReload();
 	}
 
-	protected virtual void OnHit(HealthComponent.HullUpdate hullUpdate) {}
+	protected virtual void OnHullChanged(HealthComponent.HullUpdate hullUpdate) {}
+
+	protected virtual void OnDurabilityChanged(HealthComponent.DurabilityUpdate durabilityUpdate)
+    {
+		if (!durabilityUpdate.IsHeal)
+        	DurabilityRegenWaitTime.Start(CharacterStats.DurabilityRecoveryCD);
+    }
+
+	protected virtual void OnShieldChanged(HealthComponent.ShieldUpdate shieldUpdate)
+    {
+		if (!shieldUpdate.IsHeal)
+        	ShieldRegenWaitTime.Start(CharacterStats.ShieldRecoveryCD);
+    }
+
+	protected virtual void OnHullExposed() {}
+
+	protected virtual void OnShieldDestroyed() {}
+
+	protected virtual void OnDurabilityRegenTimerTimeout() {}
+	
+	protected virtual void OnShieldRegenTimerTimeout() {}
 
 	protected virtual void OnDeath()
 	{

@@ -46,7 +46,7 @@ public partial class HurtboxComponent : Area2D
 			hullDamage = projectile.hitboxComponent.HullDamage;
 			durabilityDamage = projectile.hitboxComponent.DurabilityDamage;
 			shieldDamage = projectile.hitboxComponent.ShieldDamage;
-			DealDamageWithModifiers(ref hullDamage, ref durabilityDamage, ref shieldDamage, projectile.Crit ? projectile.damageData.CritDamage : 0);
+			DealDamageWithModifiers(ref hullDamage, ref durabilityDamage, ref shieldDamage, projectile.IsCrit ? projectile.damageData.CritDamage : 0);
 		}
 
 		

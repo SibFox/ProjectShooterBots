@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="ProjectShooterBots"
-config/tags=PackedStringArray("c#", "main")
+config/version="production10"
+config/tags=PackedStringArray("c#")
 run/main_scene="res://Content/Main/Main.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"

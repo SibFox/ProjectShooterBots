@@ -61,7 +61,6 @@ anti_aliasing = false
 
 [node name="BaseNPC" groups=["NPC"] instance=ExtResource("1_gki31")]
 script = ExtResource("2_2c6dp")
-CharacterStats = null
 
 [node name="HealthComponent" parent="." index="1"]
 MaxHullPoints = 1500.0
