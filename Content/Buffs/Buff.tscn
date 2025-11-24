@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://calvb0is4cr1u"]
+
+[ext_resource type="Script" uid="uid://d26uc8ym3u8c1" path="res://Content/Buffs/Buff.cs" id="1_3y7w0"]
+
+[node name="Buff" type="Node"]
+script = ExtResource("1_3y7w0")
+Modifiers = Array[Object]([])
+
+[node name="DurationTimer" type="Timer" parent="."]

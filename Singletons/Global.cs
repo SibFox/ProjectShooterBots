@@ -3,6 +3,20 @@ using Godot;
 [GlobalClass]
 public partial class Global : Node
 {
+	#region Enums
+	public enum Stats
+    {
+        AllDamage,
+		HullDamage,
+		DurabilityDamage,
+		ShieldDamage,
+		MaxHull,
+		MaxDurability,
+		MaxShield
+    }
+	#endregion
+
+
 	public static Main Main 
 	{
 		get => mainScene;

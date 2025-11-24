@@ -119,7 +119,7 @@ public partial class Projectile : CharacterBody2D
 		// if (IsExplosion)
 		var particles = GetNode<CpuParticles2D>("CPUParticles");
 		particles.OneShot = true;
-		// particles.Lifetime = 0.1;
+		// particles.Lifetime = 0.1;w
 		particles.Reparent(Global.Main.ActiveLevel.Particles);
 
 		OnKill(leftDistance);

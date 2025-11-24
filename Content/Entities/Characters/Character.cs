@@ -26,6 +26,7 @@ public partial class Character : CharacterBody2D
 	public Timer DurabilityRegenWaitTime => GetNode<Timer>("Timers/DurabilityRegenWait");
 	public Timer ShieldRegenWaitTime => GetNode<Timer>("Timers/ShieldRegenWait");
 	public Inventory Inventory => GetNode<Inventory>("Inventory");
+	public BuffsContainer BuffsContainer => GetNode<BuffsContainer>("BuffsContainer");
 
 	public double CalculatedDelta { get; private set; }
 	public virtual Vector2 Direction => Vector2.Zero;
@@ -84,6 +85,15 @@ public partial class Character : CharacterBody2D
 	{
 		weapon?.ActionReload();
 	}
+
+	public void AddBuff(Buff buff)
+    {
+		if (buff is not null)
+        {
+            buff.Holder = this;
+        	BuffsContainer.AddChild(buff);
+        }
+    }
 
 	protected virtual void OnHullChanged(HealthComponent.HullUpdate hullUpdate) {}
 

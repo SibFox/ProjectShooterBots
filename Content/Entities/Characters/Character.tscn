@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b81l8dmm5tgh6"]
+[gd_scene load_steps=26 format=3 uid="uid://b81l8dmm5tgh6"]
 
 [ext_resource type="Script" uid="uid://bk1rygagcrfdm" path="res://Content/Entities/Characters/Character.cs" id="1_wmsn8"]
 [ext_resource type="Script" uid="uid://crmernbqrhgcu" path="res://Content/Resources/CharacterStatsData.cs" id="2_xc881"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b4y3p1sa6ikb1" path="res://Components/HurtboxComponent.tscn" id="4_776jl"]
 [ext_resource type="PackedScene" uid="uid://c87lhflhin60n" path="res://Components/VelocityComponent.tscn" id="6_mihxm"]
 [ext_resource type="PackedScene" uid="uid://2sgej4a0o8f3" path="res://Components/HealthComponent.tscn" id="7_mumuf"]
+[ext_resource type="Script" uid="uid://dxfsc15sk8ahm" path="res://Content/Entities/Characters/BuffsContainer.cs" id="8_3ucks"]
 [ext_resource type="Script" uid="uid://ddvy50iecr5yp" path="res://Content/Entities/Characters/SmallHpHud.cs" id="8_8aoxv"]
 [ext_resource type="FontFile" uid="uid://vtwkx5y5oxq2" path="res://Assets/Fonts/Xolonium/Xolonium-Regular.otf" id="8_85ajk"]
 [ext_resource type="StyleBox" uid="uid://beub8vgpiyoui" path="res://Assets/Styles/HealthBars/HullBarBG.stylebox" id="8_yq6os"]
@@ -139,6 +140,9 @@ animation = &"legs"
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_ioqin")
 
+[node name="BuffsContainer" type="Node" parent="."]
+script = ExtResource("8_3ucks")
+
 [node name="Node" type="Node" parent="."]
 
 [node name="SmallHPHud" type="Panel" parent="Node"]
@@ -206,3 +210,4 @@ script = SubResource("GDScript_yq6os")
 [connection signal="ShieldChanged" from="HealthComponent" to="." method="OnShieldChanged"]
 [connection signal="ShieldDestroyed" from="HealthComponent" to="." method="OnShieldDestroyed"]
 [connection signal="child_entered_tree" from="Inventory" to="Inventory" method="on_ChildEnteredTree"]
+[connection signal="child_entered_tree" from="BuffsContainer" to="BuffsContainer" method="OnChildEnteredTree"]
