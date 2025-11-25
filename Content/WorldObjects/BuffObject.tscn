@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvmfrvj67wg12"]
+
+[ext_resource type="PackedScene" uid="uid://uyp552o3gx4c" path="res://Content/WorldObjects/MapObject.tscn" id="1_ud170"]
+[ext_resource type="Script" uid="uid://kuvil0g3mxtd" path="res://Content/WorldObjects/BuffObject.cs" id="2_i3c32"]
+
+[node name="BuffObject" instance=ExtResource("1_ud170")]
+script = ExtResource("2_i3c32")
+buff = null

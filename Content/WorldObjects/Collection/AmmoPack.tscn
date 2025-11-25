@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://7mie5ebeuus"]
 
 [ext_resource type="PackedScene" uid="uid://uyp552o3gx4c" path="res://Content/WorldObjects/MapObject.tscn" id="1_7y1go"]
-[ext_resource type="Script" uid="uid://bnnqhn8pplvem" path="res://Content/WorldObjects/AmmoPack.cs" id="2_b1p25"]
+[ext_resource type="Script" uid="uid://bnnqhn8pplvem" path="res://Content/WorldObjects/Collection/AmmoPack.cs" id="2_b1p25"]
 [ext_resource type="Texture2D" uid="uid://bvwbasqt3eu3" path="res://Assets/Enviroment/Pickups/bullet_crate.png" id="2_v1r3f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b1p25"]

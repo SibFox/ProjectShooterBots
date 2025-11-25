@@ -8,6 +8,7 @@ script = ExtResource("2_2oyoh")
 TargetetStat = 4
 Value = 300.0
 Operation = 0
+Priority = 0
 metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
 [sub_resource type="Resource" id="Resource_k2kp6"]
@@ -15,9 +16,10 @@ script = ExtResource("2_2oyoh")
 TargetetStat = 5
 Value = 50.0
 Operation = 0
+Priority = 0
 metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
-[node name="MaxHull300MaxDur50" instance=ExtResource("1_qi0e1")]
+[node name="MaxHullU300MaxDurU50" instance=ExtResource("1_qi0e1")]
 Title = "Hull and Durability Increase"
-Duration = 30.0
+Duration = 10.0
 Modifiers = Array[Object]([SubResource("Resource_uo4bs"), SubResource("Resource_k2kp6")])

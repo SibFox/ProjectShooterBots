@@ -62,11 +62,11 @@ public partial class Character : CharacterBody2D
 
 	protected virtual void CustomUpdate(double delta)
     {
-        if (DurabilityRegenWaitTime.IsStopped() && healthComponent.CurrentHullPointsPercent < 1)
+        if (DurabilityRegenWaitTime.IsStopped() && !healthComponent.IsDurabilityMax)
         {
 			healthComponent.Heal(0, healthComponent.MaxDurability * CharacterStats.DurabilityRecovery * delta, 0);
         }
-		if (ShieldRegenWaitTime.IsStopped() && healthComponent.CurrentShieldPercent < 1)
+		if (ShieldRegenWaitTime.IsStopped() && !healthComponent.IsShieldMax)
         {
             healthComponent.Heal(0, 0, healthComponent.MaxShield * CharacterStats.ShieldRecovery * delta);
         }

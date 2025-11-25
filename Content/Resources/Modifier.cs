@@ -24,6 +24,8 @@ public partial class Modifier() : Resource
     private int _priority;
     [Export]
     public int Priority { get => _priority; set => _priority = Mathf.Clamp(value, 0, 100); }
+
+    public Buff CausedBy;
     
     
 }

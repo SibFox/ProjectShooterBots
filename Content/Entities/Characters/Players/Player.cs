@@ -41,10 +41,10 @@ public partial class Player : Character
 
 
 
-    // protected override void OnDeath()
-    // {
-    //     GetTree().PhysicsFrame += Queue;
-    // }
+	// protected override void OnDeath()
+	// {
+	//     GetTree().PhysicsFrame += Queue;
+	// }
 
 	// void Queue()
 	// {
@@ -53,17 +53,17 @@ public partial class Player : Character
 
 
 	public override void _UnhandledInput(InputEvent @event)
-    {
+	{
 		if (@event.IsActionPressed("equip_weapon_previous"))
 		{
-            (Inventory.previousIndex, Inventory.equipedIndex.Val) = (Inventory.equipedIndex.Val, Inventory.previousIndex);
+			(Inventory.previousIndex, Inventory.equipedIndex.Val) = (Inventory.equipedIndex.Val, Inventory.previousIndex);
 			Inventory.SwitchWeaponNode(Inventory.equipedIndex.Val);
 			GetViewport().SetInputAsHandled();
 			return;
-        }
-        
+		}
+		
 		Inventory.previousIndex = Inventory.equipedIndex.Val;
-        if (@event.IsActionPressed("equip_weapon_1"))
+		if (@event.IsActionPressed("equip_weapon_1"))
 		{
 			Inventory.SwitchWeaponNode(0);
 			GetViewport().SetInputAsHandled();
@@ -89,6 +89,6 @@ public partial class Player : Character
 			GetViewport().SetInputAsHandled();
 		}
 
-    }
+	}
 
 }

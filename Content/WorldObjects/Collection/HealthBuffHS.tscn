@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3733p5r4h2bl"]
+
+[ext_resource type="PackedScene" uid="uid://cvmfrvj67wg12" path="res://Content/WorldObjects/BuffObject.tscn" id="1_yh7d2"]
+[ext_resource type="Texture2D" uid="uid://bvwbasqt3eu3" path="res://Assets/Enviroment/Pickups/bullet_crate.png" id="2_c778t"]
+[ext_resource type="PackedScene" uid="uid://bm4i5uqu36cc6" path="res://Content/Buffs/Collection/MaxHealthD500MaxShieldU200HullXD0_3.tscn" id="2_e1vix"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1vix"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_c778t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tffqa"]
+
+[node name="HealthBuffHS" instance=ExtResource("1_yh7d2")]
+rotation = 3.92699
+scale = Vector2(2, 2)
+buff = ExtResource("2_e1vix")
+
+[node name="AnimatedSprite" parent="." index="0"]
+modulate = Color(0, 0.9, 1, 1)
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_e1vix")
+
+[node name="InteractShape" parent="InteractArea" index="0"]
+shape = SubResource("CircleShape2D_tffqa")

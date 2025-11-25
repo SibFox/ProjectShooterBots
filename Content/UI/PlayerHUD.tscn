@@ -6,7 +6,6 @@
 [ext_resource type="StyleBox" uid="uid://w665dei4hy55" path="res://Assets/Styles/HealthBars/HullBarFill.stylebox" id="4_rkiur"]
 [ext_resource type="StyleBox" uid="uid://xy5aongky4gl" path="res://Assets/Styles/HealthBars/DurabilityBarBG.stylebox" id="5_4mmei"]
 [ext_resource type="StyleBox" uid="uid://lxhlj6chhby3" path="res://Assets/Styles/HealthBars/DurabilityBarFill.stylebox" id="6_ylxfn"]
-[ext_resource type="StyleBox" uid="uid://cfyuj6t5ottft" path="res://Assets/Styles/HealthBars/NoColorBG.tres" id="7_cma2j"]
 [ext_resource type="StyleBox" uid="uid://deq5p28fpx4is" path="res://Assets/Styles/HealthBars/ShieldBarFill.tres" id="8_7ljqp"]
 
 [sub_resource type="Theme" id="Theme_owt7e"]
@@ -18,6 +17,8 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjupg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cf78g"]
 bg_color = Color(1, 1, 1, 1)
@@ -129,7 +130,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/background = ExtResource("7_cma2j")
+theme_override_styles/background = SubResource("StyleBoxEmpty_xjupg")
 theme_override_styles/fill = ExtResource("8_7ljqp")
 value = 25.0
 show_percentage = false

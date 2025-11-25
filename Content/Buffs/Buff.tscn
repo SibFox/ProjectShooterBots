@@ -5,5 +5,4 @@
 [node name="Buff" type="Node"]
 script = ExtResource("1_3y7w0")
 Modifiers = Array[Object]([])
-
-[node name="DurationTimer" type="Timer" parent="."]
+metadata/_custom_type_script = "uid://d26uc8ym3u8c1"

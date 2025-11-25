@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class HealthBuff : MapObject
+public partial class BuffObject : MapObject
 {
     [Export]
     private PackedScene buff;
@@ -10,7 +10,10 @@ public partial class HealthBuff : MapObject
         if (body is Character character)
         {
             character.AddBuff(buff.InstantiateOrNull<Buff>());
+            character.healthComponent.Heal(50, 0, 0);
         }
+
+        QueueFree();
     }
 
 }

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://bd6efyvp20j3t"]
+[gd_scene load_steps=7 format=4 uid="uid://bd6efyvp20j3t"]
 
 [ext_resource type="PackedScene" uid="uid://ckyw4wl4p461m" path="res://Content/Levels/BaseLevel.tscn" id="1_0cppr"]
 [ext_resource type="Script" uid="uid://b6q8aetqxtje5" path="res://Content/Levels/LevelVR1/LevelVR1.cs" id="2_0er2o"]
-[ext_resource type="PackedScene" uid="uid://7mie5ebeuus" path="res://Content/WorldObjects/AmmoPack.tscn" id="3_obni7"]
-[ext_resource type="PackedScene" uid="uid://ddf21qv1lvkek" path="res://Content/WorldObjects/ExplodingBarrel.tscn" id="4_jttef"]
-[ext_resource type="PackedScene" uid="uid://bqn0n23ru6qki" path="res://Content/WorldObjects/HealthBuff.tscn" id="5_01w0d"]
+[ext_resource type="PackedScene" uid="uid://7mie5ebeuus" path="res://Content/WorldObjects/Collection/AmmoPack.tscn" id="3_obni7"]
+[ext_resource type="PackedScene" uid="uid://ddf21qv1lvkek" path="res://Content/WorldObjects/Collection/ExplodingBarrel.tscn" id="4_jttef"]
+[ext_resource type="PackedScene" uid="uid://bpglvrxxfwsin" path="res://Content/WorldObjects/Collection/HealthBuffJHD.tscn" id="5_4isa2"]
+[ext_resource type="PackedScene" uid="uid://b3733p5r4h2bl" path="res://Content/WorldObjects/Collection/HealthBuffHS.tscn" id="6_u4ih8"]
 
 [node name="LevelVR1" instance=ExtResource("1_0cppr")]
 script = ExtResource("2_0er2o")
@@ -62,14 +63,41 @@ position = Vector2(1791, 366)
 collision_layer = 1
 collision_mask = 1
 
-[node name="HealthBuff" parent="MapObjects" index="10" instance=ExtResource("5_01w0d")]
-position = Vector2(1274, 72)
+[node name="HealthBuffHD" parent="MapObjects" index="10" instance=ExtResource("5_4isa2")]
+position = Vector2(1670, 128)
 
-[node name="HealthBuff2" parent="MapObjects" index="11" instance=ExtResource("5_01w0d")]
-position = Vector2(1750, 72)
+[node name="HealthBuffHD2" parent="MapObjects" index="11" instance=ExtResource("5_4isa2")]
+position = Vector2(1671, 81)
 
-[node name="HealthBuff3" parent="MapObjects" index="12" instance=ExtResource("5_01w0d")]
-position = Vector2(1275, 456)
+[node name="HealthBuffHD3" parent="MapObjects" index="12" instance=ExtResource("5_4isa2")]
+position = Vector2(1671, 182)
+
+[node name="HealthBuffHD4" parent="MapObjects" index="13" instance=ExtResource("5_4isa2")]
+position = Vector2(1732, 129)
+
+[node name="HealthBuffHD5" parent="MapObjects" index="14" instance=ExtResource("5_4isa2")]
+position = Vector2(1736, 82.0001)
+
+[node name="HealthBuffHD6" parent="MapObjects" index="15" instance=ExtResource("5_4isa2")]
+position = Vector2(1735, 181)
+
+[node name="HealthBuffHS" parent="MapObjects" index="16" instance=ExtResource("6_u4ih8")]
+position = Vector2(1398, 132)
+
+[node name="HealthBuffHS2" parent="MapObjects" index="17" instance=ExtResource("6_u4ih8")]
+position = Vector2(1398, 81.0001)
+
+[node name="HealthBuffHS3" parent="MapObjects" index="18" instance=ExtResource("6_u4ih8")]
+position = Vector2(1349, 80.0001)
+
+[node name="HealthBuffHS4" parent="MapObjects" index="19" instance=ExtResource("6_u4ih8")]
+position = Vector2(1348, 130)
+
+[node name="HealthBuffHS5" parent="MapObjects" index="20" instance=ExtResource("6_u4ih8")]
+position = Vector2(1346, 185)
+
+[node name="HealthBuffHS6" parent="MapObjects" index="21" instance=ExtResource("6_u4ih8")]
+position = Vector2(1399, 186)
 
 [node name="PlayerSpawnPoint" parent="SpawnPoints" index="0"]
 position = Vector2(1550, 180)
