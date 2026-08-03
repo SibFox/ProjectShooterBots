@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm4i5uqu36cc6"]
+[gd_scene load_steps=7 format=3 uid="uid://bm4i5uqu36cc6"]
 
 [ext_resource type="PackedScene" uid="uid://calvb0is4cr1u" path="res://Content/Buffs/Buff.tscn" id="1_bk2kp"]
 [ext_resource type="Script" uid="uid://ch17dpc8gj74" path="res://Content/Resources/Modifier.cs" id="2_j0kn8"]
 
 [sub_resource type="Resource" id="Resource_gbawx"]
 script = ExtResource("2_j0kn8")
-TargetetStat = 4
+TargetetStat = 7
 Value = -500.0
 Operation = 0
 Priority = 0
@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
 [sub_resource type="Resource" id="Resource_jwj1o"]
 script = ExtResource("2_j0kn8")
-TargetetStat = 6
+TargetetStat = 9
 Value = 200.0
 Operation = 0
 Priority = 0
@@ -21,13 +21,21 @@ metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
 [sub_resource type="Resource" id="Resource_8k0ns"]
 script = ExtResource("2_j0kn8")
-TargetetStat = 5
+TargetetStat = 7
 Value = -0.3
 Operation = 2
+Priority = 0
+metadata/_custom_type_script = "uid://ch17dpc8gj74"
+
+[sub_resource type="Resource" id="Resource_4w4rp"]
+script = ExtResource("2_j0kn8")
+TargetetStat = 16
+Value = 10.0
+Operation = 0
 Priority = 0
 metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
 [node name="MaxHealthD500MaxShieldU200HullXD0_3" instance=ExtResource("1_bk2kp")]
 Title = "Health Down and Shield Up"
 Duration = 10.0
-Modifiers = Array[Object]([SubResource("Resource_gbawx"), SubResource("Resource_jwj1o"), SubResource("Resource_8k0ns")])
+Modifiers = Array[Object]([SubResource("Resource_gbawx"), SubResource("Resource_jwj1o"), SubResource("Resource_8k0ns"), SubResource("Resource_4w4rp")])

@@ -4,15 +4,40 @@ using Godot;
 public partial class Global : Node
 {
 	#region Enums
-	public enum Stats
+	public enum CharacterStats
+	{
+		AllDamage,
+		HullDamage,
+		DurabilityDamage,
+		ShieldDamage,
+		CritChance,
+		CritDamage,
+		ArmorPierce,
+		MaxHull,            		//+
+		MaxDurability,      		//+
+		MaxShield,          		//+
+		HullRecoveryFlat,			//?
+		HullRecoveryPercent,		//?
+		HullRecoveryCD,				//?
+		DurabilityRecoveryFlat,		//?
+		DurabilityRecoveryPercent,	//?
+		DurabilityRecoveryCD,		//?
+		ShieldRecoveryFlat,			//?
+		ShieldRecoveryPercent,		//?
+		ShieldRecoveryCD,			//?
+		Toughness,					//---
+		MaxSpeed,
+	}
+
+	public enum WeaponStats
     {
         AllDamage,
 		HullDamage,
 		DurabilityDamage,
 		ShieldDamage,
-		MaxHull,
-		MaxDurability,
-		MaxShield
+		CritChance,
+		CritDamage,
+		ArmorPierce,
     }
 	#endregion
 

@@ -18,11 +18,15 @@
 
 [sub_resource type="Resource" id="Resource_uanwm"]
 script = ExtResource("2_xc881")
-Toughness = 50
-HullRecovery = 0.0
-DurabilityRecovery = 0.2
+Toughness = 50.0
+HullRecoveryFlat = 0.0
+HullRecoveryPercent = 0.0
+HullRecoveryCD = 0.0
+DurabilityRecoveryFlat = 0.0
+DurabilityRecoveryPercent = 0.2
 DurabilityRecoveryCD = 3.0
-ShieldRecovery = 0.05
+ShieldRecoveryFlat = 0.0
+ShieldRecoveryPercent = 0.0
 ShieldRecoveryCD = 3.0
 metadata/_custom_type_script = "uid://crmernbqrhgcu"
 
@@ -102,6 +106,10 @@ velocityComponent = NodePath("VelocityComponent")
 process_callback = 0
 one_shot = true
 
+[node name="HullRegenWait" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
 [node name="ShieldRegenWait" type="Timer" parent="Timers"]
 process_callback = 0
 one_shot = true
@@ -140,8 +148,9 @@ animation = &"legs"
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_ioqin")
 
-[node name="BuffsContainer" type="Node" parent="."]
+[node name="BuffsContainer" type="Node" parent="." node_paths=PackedStringArray("Holder")]
 script = ExtResource("8_3ucks")
+Holder = NodePath("..")
 
 [node name="Node" type="Node" parent="."]
 
@@ -202,6 +211,7 @@ script = SubResource("GDScript_yq6os")
 [connection signal="CharacterReload" from="." to="." method="ManageReload"]
 [connection signal="CharacterShoot" from="." to="." method="ManageShot"]
 [connection signal="timeout" from="Timers/DurabilityRegenWait" to="." method="OnDurabilityRegenTimerTimeout"]
+[connection signal="timeout" from="Timers/HullRegenWait" to="." method="OnHullRegenTimerTimeout"]
 [connection signal="timeout" from="Timers/ShieldRegenWait" to="." method="OnShieldRegenTimerTimeout"]
 [connection signal="Died" from="HealthComponent" to="." method="OnDeath"]
 [connection signal="DurabilityChanged" from="HealthComponent" to="." method="OnDurabilityChanged"]

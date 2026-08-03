@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_uo4bs"]
 script = ExtResource("2_2oyoh")
-TargetetStat = 4
+TargetetStat = 7
 Value = 300.0
 Operation = 0
 Priority = 0
@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://ch17dpc8gj74"
 
 [sub_resource type="Resource" id="Resource_k2kp6"]
 script = ExtResource("2_2oyoh")
-TargetetStat = 5
+TargetetStat = 8
 Value = 50.0
 Operation = 0
 Priority = 0

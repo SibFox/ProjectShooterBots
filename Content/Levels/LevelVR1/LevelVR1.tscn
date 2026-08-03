@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://bd6efyvp20j3t"]
+[gd_scene load_steps=8 format=4 uid="uid://bd6efyvp20j3t"]
 
 [ext_resource type="PackedScene" uid="uid://ckyw4wl4p461m" path="res://Content/Levels/BaseLevel.tscn" id="1_0cppr"]
 [ext_resource type="Script" uid="uid://b6q8aetqxtje5" path="res://Content/Levels/LevelVR1/LevelVR1.cs" id="2_0er2o"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ddf21qv1lvkek" path="res://Content/WorldObjects/Collection/ExplodingBarrel.tscn" id="4_jttef"]
 [ext_resource type="PackedScene" uid="uid://bpglvrxxfwsin" path="res://Content/WorldObjects/Collection/HealthBuffJHD.tscn" id="5_4isa2"]
 [ext_resource type="PackedScene" uid="uid://b3733p5r4h2bl" path="res://Content/WorldObjects/Collection/HealthBuffHS.tscn" id="6_u4ih8"]
+[ext_resource type="PackedScene" uid="uid://d1vklgfde0nks" path="res://Content/WorldObjects/Collection/DurRecBuff.tscn" id="7_u4ih8"]
 
 [node name="LevelVR1" instance=ExtResource("1_0cppr")]
 script = ExtResource("2_0er2o")
@@ -98,6 +99,24 @@ position = Vector2(1346, 185)
 
 [node name="HealthBuffHS6" parent="MapObjects" index="21" instance=ExtResource("6_u4ih8")]
 position = Vector2(1399, 186)
+
+[node name="DurRecBuff" parent="MapObjects" index="22" instance=ExtResource("7_u4ih8")]
+position = Vector2(1350, -24)
+
+[node name="DurRecBuff2" parent="MapObjects" index="23" instance=ExtResource("7_u4ih8")]
+position = Vector2(1399, -25)
+
+[node name="DurRecBuff3" parent="MapObjects" index="24" instance=ExtResource("7_u4ih8")]
+position = Vector2(1399, -76)
+
+[node name="DurRecBuff4" parent="MapObjects" index="25" instance=ExtResource("7_u4ih8")]
+position = Vector2(1350, -76)
+
+[node name="DurRecBuff5" parent="MapObjects" index="26" instance=ExtResource("7_u4ih8")]
+position = Vector2(1449, -77)
+
+[node name="DurRecBuff6" parent="MapObjects" index="27" instance=ExtResource("7_u4ih8")]
+position = Vector2(1449, -26)
 
 [node name="PlayerSpawnPoint" parent="SpawnPoints" index="0"]
 position = Vector2(1550, 180)

@@ -13,7 +13,7 @@ public partial class Modifier() : Resource
     }
     
     [Export]
-    public Global.Stats TargetetStat;
+    public Global.CharacterStats TargetetStat;
     [Export]
     public double Value { get; set; }
     [Export]

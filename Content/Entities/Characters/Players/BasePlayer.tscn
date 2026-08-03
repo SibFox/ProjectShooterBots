@@ -1,22 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bw0de3rtncpxp"]
+[gd_scene load_steps=13 format=3 uid="uid://bw0de3rtncpxp"]
 
 [ext_resource type="PackedScene" uid="uid://b81l8dmm5tgh6" path="res://Content/Entities/Characters/Character.tscn" id="1_2uvrd"]
 [ext_resource type="Script" uid="uid://dbub1iuvdjsyp" path="res://Content/Entities/Characters/Players/Player.cs" id="2_3v2bg"]
 [ext_resource type="Script" uid="uid://dyivihaohewji" path="res://addons/ProCam2D/scripts/pcam_target.gd" id="3_mykgo"]
-[ext_resource type="Script" uid="uid://crmernbqrhgcu" path="res://Content/Resources/CharacterStatsData.cs" id="3_sekp0"]
 [ext_resource type="Script" uid="uid://cpq6oehcwuu2d" path="res://Content/Entities/Characters/Players/Mouse.cs" id="4_rhsjm"]
 [ext_resource type="Texture2D" uid="uid://tpok1rr6f5u" path="res://Assets/Cursor.png" id="5_pputt"]
 [ext_resource type="PackedScene" uid="uid://da0mwar2tbgog" path="res://Content/UI/PlayerHUD.tscn" id="6_8nl01"]
-
-[sub_resource type="Resource" id="Resource_b5o83"]
-script = ExtResource("3_sekp0")
-Toughness = 50
-HullRecovery = 0.0
-DurabilityRecovery = 0.2
-DurabilityRecoveryCD = 2.0
-ShieldRecovery = 0.05
-ShieldRecoveryCD = 3.0
-metadata/_custom_type_script = "uid://crmernbqrhgcu"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5bygm"]
 resource_local_to_scene = true
@@ -76,7 +65,6 @@ anti_aliasing = false
 
 [node name="BasePlayer" groups=["Player"] instance=ExtResource("1_2uvrd")]
 script = ExtResource("2_3v2bg")
-CharacterStats = SubResource("Resource_b5o83")
 
 [node name="DurabilityRegenWait" parent="Timers" index="0"]
 wait_time = 3.0

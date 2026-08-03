@@ -17,7 +17,15 @@ public partial class Buff : Node
 
 	[ExportCategory("Stat")]
 	[Export(PropertyHint.Range, "0, 60, 0.01, or_greater")]
-	public double Duration { get => DurationTimer.WaitTime; private set => DurationTimer.WaitTime = value; }
+	public double Duration
+	{
+		get => DurationTimer.WaitTime; 
+		private set
+		{
+			DurationTimer.WaitTime = value;
+			Infinite = DurationTimer.WaitTime == 0;
+		}
+	}
 	public double TimeLeft { get => DurationTimer.TimeLeft; }
 	[Export]
 	public bool Infinite { get; private set; }
@@ -34,12 +42,14 @@ public partial class Buff : Node
 		set
 		{
 			if (value is not null)
-            {
+			{
 				_holder = value;
-				DurationTimer.Timeout += OnDurationTimerTimeout;                
-            }
+				DurationTimer.Timeout += OnDurationTimerTimeout;
+			}
 		}
 	}
+	
+	public virtual void Reapply() {}
 
 	public void SetSelfForModifiers()
 	{

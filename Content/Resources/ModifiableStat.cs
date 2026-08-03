@@ -3,28 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public partial class ModifiableStat(double value = 0, Func<double> modifierCalculationFunction = null) : Resource
+public partial class ModifiableStat(double value = 0,
+                        ModifiableStat.CalculationFunctionDelegate modifierCalculationFunction = null) : Resource
 {
+    public delegate double CalculationFunctionDelegate(double value, ref double storedCalcValue, IOrderedEnumerable<Modifier> modifiers);
+
+    private bool modifiersHasChanged = true;
+    LinkedList<Modifier> Modifiers = new();
+
     public double Value { get; set; } = value;
     private double _storedCalcValue = value;
-    private double _calculatedValue;
-    public double CalculatedValue { get => CalculationFunctionDelegate.Invoke(); }
+    public double CalculatedValue
+    {
+        get
+        {
+            if (modifiersHasChanged)
+            {
+                modifiersHasChanged = false;
+                if (Modifiers.Count != 0)
+                    return CalculationFunctionMethod.Invoke(Value, ref _storedCalcValue, Modifiers.OrderByDescending(p => p.Priority));
+                _storedCalcValue = Value;
+                return _storedCalcValue;
+            }
+            return _storedCalcValue;
+        }
+    }
 
-    private Func<double> _calcFunc = modifierCalculationFunction;
-    public Func<double> CalculationFunctionDelegate 
+    // private CalculationFunctionDelegate _calcFunc = modifierCalculationFunction;
+    private CalculationFunctionDelegate CalculationFunctionMethod 
     { 
         get
         {
-            if (_calcFunc == null)
+            if (modifierCalculationFunction == null)
                 return CalculateModifiers;
-            return _calcFunc;    
-        } 
-        set => _calcFunc = value; 
+            return modifierCalculationFunction;    
+        }
     }
-
-    private bool modifiersHasChanged = true;
-    // private int previousModifiersCount = -1;
-    LinkedList<Modifier> Modifiers = new();
 
     public void AddModifier(Modifier modifier)
     {
@@ -43,53 +57,40 @@ public partial class ModifiableStat(double value = 0, Func<double> modifierCalcu
         }
     }
 
-    double CalculateModifiers()
+    double CalculateModifiers(double Value, ref double _storedCalcValue, IOrderedEnumerable<Modifier> Modifiers)
     {
-        if (modifiersHasChanged)
+        double addMod = 0;
+        double multMod = 0;
+        double finalAddMod = 0;
+        double finalMultMod = 0;
+        
+        for (int i = 0; i < Modifiers.Count(); i++)
         {
-            modifiersHasChanged = false;
-            // previousModifiersCount = Modifiers.Count;
-            if (Modifiers.Count > 0)
+            Modifier modifier = Modifiers.ElementAt(i);
+            
+            switch (modifier.Operation)
             {
-                IOrderedEnumerable<Modifier> ordered = Modifiers.OrderByDescending(p => p.Priority);
-
-                double addMod = 0;
-                double multMod = 0;
-                double finalAddMod = 0;
-                double finalMultMod = 0;
-                
-                for (int i = 0; i < ordered.Count(); i++)
-                {
-                    Modifier modifier = ordered.ElementAt(i);
-                    
-                    switch (modifier.Operation)
-                    {
-                        case Modifier.Operations.Set:
-                            _storedCalcValue = Mathf.Snapped(modifier.Value, 0.00000);
-                            return _storedCalcValue;
-                        case Modifier.Operations.Add:
-                            addMod += Mathf.Snapped(modifier.Value, 0.00000);
-                            break;
-                        case Modifier.Operations.AddFinal:
-                            finalAddMod += Mathf.Snapped(modifier.Value, 0.00000);
-                            break;
-                        case Modifier.Operations.Multiply:
-                            multMod += Mathf.Snapped(modifier.Value, 0.00000);
-                            break;
-                        case Modifier.Operations.MultiplyFinal:
-                            finalMultMod += Mathf.Snapped(modifier.Value, 0.00000);
-                            break;
-                    }
-                }
-
-                double addAndMult = (Value + addMod) + (Value * multMod);
-                _storedCalcValue = (addAndMult + finalAddMod) + (addAndMult * finalMultMod);
-                return _storedCalcValue;
+                case Modifier.Operations.Set:
+                    _storedCalcValue = Mathf.Snapped(modifier.Value, 0.00000);
+                    return _storedCalcValue;
+                case Modifier.Operations.Add:
+                    addMod += Mathf.Snapped(modifier.Value, 0.00000);
+                    break;
+                case Modifier.Operations.AddFinal:
+                    finalAddMod += Mathf.Snapped(modifier.Value, 0.00000);
+                    break;
+                case Modifier.Operations.Multiply:
+                    multMod += Mathf.Snapped(modifier.Value, 0.00000);
+                    break;
+                case Modifier.Operations.MultiplyFinal:
+                    finalMultMod += Mathf.Snapped(modifier.Value, 0.00000);
+                    break;
             }
-            _storedCalcValue = Value;
-            return _storedCalcValue;
         }
-        return _storedCalcValue;
+
+        double finalValue = (Value + addMod) + (Value * multMod);
+        _storedCalcValue = (finalValue + finalAddMod) + (finalValue * finalMultMod);
+        return _storedCalcValue;        
     }
 
     #region Operator overides

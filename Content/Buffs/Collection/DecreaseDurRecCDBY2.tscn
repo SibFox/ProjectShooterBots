@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcksmm8qnh0e8"]
+
+[ext_resource type="PackedScene" uid="uid://calvb0is4cr1u" path="res://Content/Buffs/Buff.tscn" id="1_3jkbu"]
+[ext_resource type="Script" uid="uid://ch17dpc8gj74" path="res://Content/Resources/Modifier.cs" id="2_5dlmk"]
+
+[sub_resource type="Resource" id="Resource_u4iyp"]
+script = ExtResource("2_5dlmk")
+TargetetStat = 14
+Value = 0.2
+Operation = 0
+Priority = 0
+metadata/_custom_type_script = "uid://ch17dpc8gj74"
+
+[sub_resource type="Resource" id="Resource_cf4dr"]
+script = ExtResource("2_5dlmk")
+TargetetStat = 15
+Value = 0.3
+Operation = 2
+Priority = 0
+metadata/_custom_type_script = "uid://ch17dpc8gj74"
+
+[sub_resource type="Resource" id="Resource_3jkbu"]
+script = ExtResource("2_5dlmk")
+TargetetStat = 10
+Value = 2.0
+Operation = 0
+Priority = 0
+metadata/_custom_type_script = "uid://ch17dpc8gj74"
+
+[node name="DecreaseDurRecCDBY2" instance=ExtResource("1_3jkbu")]
+Title = "Dur Rec CD decrease"
+Duration = 20.0
+Modifiers = Array[Object]([SubResource("Resource_u4iyp"), SubResource("Resource_cf4dr"), SubResource("Resource_3jkbu")])
